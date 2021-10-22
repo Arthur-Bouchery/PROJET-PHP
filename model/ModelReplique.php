@@ -17,7 +17,7 @@
 
 		public function __construct($codeReplique = NULL, $nomReplique = NULL, $nomCategorie = NULL, $stockReplique = NULL, $codeMunition = NULL) {
 			if (!is_null($codeReplique) && !is_null($nomReplique) && !is_null($nomCategorie && !is_null($stockReplique) && !is_null($codeMunition))) {
-				// Si aucun de $m, $c et $i sont nuls,
+				// Si aucun attribut n'est nul,
 				// c'est forcement qu'on les a fournis
 				// donc on retombe sur le constructeur à 3 arguments
 				$this->codeReplique = $codeReplique;
@@ -25,9 +25,6 @@
 				$this->stockReplique = $stockReplique;
 				$this->nomCategorie = $nomCategorie;
 				$this->codeMunition = $codeMunition;
-
-				
-
 			}
 		}
 
