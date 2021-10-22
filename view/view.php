@@ -21,7 +21,7 @@
     </body>
     <footer>
         <p style="border: 1px solid black;text-align:center;padding-right:1em;">
-             Site de covoiturage de ...
+             Site de vente d'armes Air-soft et Paintball
         </p>
     </footer>
 </html>
