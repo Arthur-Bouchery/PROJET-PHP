@@ -3,11 +3,11 @@
     // chargement du modèle
     class ControllerReplique{
         public static function readAll($args=null) {
-            $controller = 'voiture';
+            $controller = 'replique';
             $view = 'list';
             $pagetitle = 'Liste des voitures';
             $tab_v = ModelVoiture::getAllVoitures();     //appel au modèle pour gerer la BD
-            require File::build_path(array('view','voiture','view.php'));  //"redirige" vers la vue
+            require File::build_path(array('view','view.php'));  //"redirige" vers la vue
         }
         public static function error(){
             $controller = 'replique';

@@ -6,7 +6,7 @@
     </head>
     <header>
         <p style="border: 1px solid black;text-align:center;padding-right:1em;">
-            <a href="index.php?action=readAll">Acceuil Voiture</a>
+            <a href="index.php?action=readAll">Accueil Replique</a>
             <a href="index.php?action=readAll&controller=utilisateur">Acceuil Utilisateur</a>
             <a href="index.php?action=readAll&controller=trajet">Acceuil Trajet</a>
         </p>
