@@ -2,13 +2,17 @@
         <?php
         	require_once File::build_path(array("config","Conf.php"));
 		    require_once File::build_path(array("model","Model.php"));
-            class ModelVoiture {
+            class ModelVoiture extends Model {
             	// On inclut les fichiers de classe PHP avec require_once
 		        // pour éviter qu'ils soient inclus plusieurs fois
 
             	private $marque;
 				private $couleur;
 				private $immatriculation;
+
+				//variables utilisées pour les fonction génériques de Model
+				protected static $object = 'voiture';
+				protected static $primary = 'immatriculation';
 
                 // La syntaxe ... = NULL signifie que l'argument est optionel
 				// Si un argument optionnel n'est pas fourni,
@@ -35,38 +39,7 @@
                 //	echo '<br>';
 				//}
 
-				static public function getAllVoitures(){
-					
-
-		            // On demande la table voiture a la bdd
-		            $pdo = Model::getPDO();
-		            $rep =$pdo->query('SELECT * FROM voiture');
-
-		            //tableau d'objets de classe voiture
-		            $rep->setFetchMode(PDO::FETCH_CLASS, 'ModelVoiture');
-		            return $rep->fetchAll();
-				}
-
-				public static function getVoitureByImmat($immat) {
-				    $sql = "SELECT * from voiture WHERE immatriculation=:nom_tag";
-				    // Préparation de la requête
-				    $req_prep = Model::getPDO()->prepare($sql);
-
-				    $values = array(
-				        "nom_tag" => $immat,
-				        //nomdutag => valeur, ...
-				    );
-				    // On donne les valeurs et on exécute la requête	 
-				    $req_prep->execute($values);
-
-				    // On récupère les résultats comme précédemment
-				    $req_prep->setFetchMode(PDO::FETCH_CLASS, 'ModelVoiture');
-				    $tab_voit = $req_prep->fetchAll();
-				    // Attention, si il n'y a pas de résultats, on renvoie false
-				    if (empty($tab_voit))
-				        return false;
-				    return $tab_voit[0];
-				}
+				
 
 				public function getImmatriculation(){
 					return $this->immatriculation;
@@ -92,7 +65,33 @@
 	                  if (Conf::getDebug()) {
 	                    echo $e->getMessage(); // affiche un message d'erreur
 	                  } else {
-	                    echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
+	                    echo 'Une erreur est survenue <a href="https://webinfo.iutmontp.univ-montp2.fr/~boucherya/td-php/TD6/"> retour a la page d\'accueil </a>';
+	                  }
+	                  die();
+	                }
+				}
+
+				public function update(){
+					$m = $this->marque;
+				    $c = $this->couleur;
+				    $i = $this->immatriculation;
+					$sql="UPDATE voiture SET marque= :marque_tag, couleur= :couleur_tag WHERE immatriculation= :immat_tag";
+					$req_prep = Model::getPDO()->prepare($sql);
+
+					$values = array(
+						"immat_tag" => $i,
+						"marque_tag" => $m,
+						"couleur_tag" => $c
+					);
+
+					//on execute la requete
+					try{
+						$req_prep->execute($values);
+					}catch (PDOException $e) {
+	                  if (Conf::getDebug()) {
+	                    echo $e->getMessage(); // affiche un message d'erreur
+	                  } else {
+	                    echo 'Une erreur est survenue <a href="https://webinfo.iutmontp.univ-montp2.fr/~boucherya/td-php/TD6/"> retour a la page d\'accueil </a>';
 	                  }
 	                  die();
 	                }

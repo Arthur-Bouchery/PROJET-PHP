@@ -10,14 +10,13 @@
                 'hostname' => 'webinfo',
                 // A l'IUT, vous avez une BDD nommee comme votre login
                 // Sur votre machine, vous devrez creer une BDD
-                'database' => 'marceronl',
+                'database' => 'boucherya',
                 // A l'IUT, c'est votre login
                 // Sur votre machine, vous avez surement un compte 'root'
-                'login' => 'marceronl',
+                'login' => 'boucherya',
                 // A l'IUT, c'est votre mdp (INE par defaut)
                 // Sur votre machine personelle, vous avez creez ce mdp a l'installation
-                //'password' => 'ceciestunmotdepasse'
-                'password' => 'Y8qcBT9kAPRtx&a6'
+                'password' => 'ceciestunmotdepasse'
                   );
 
                 static public function getDebug() {
