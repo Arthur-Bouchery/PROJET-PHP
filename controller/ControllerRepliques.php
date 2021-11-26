@@ -1,45 +1,45 @@
 <?php
-    require_once File::build_path(array("model","ModelVoiture.php"));
+    require_once File::build_path(array("model","ModelReplique.php"));
     // chargement du modèle
-    class ControllerVoiture {
+    class ControllerRepliques {
 
 
-        protected static $object = 'voiture';
+        protected static $object = 'p_Repliques';
 
 
         public static function readAll($args=null) {
 
             $view = 'list';
-            $pagetitle = 'Liste des voitures';
-            $tab_v = ModelVoiture::selectAll();     //appel au modèle pour gerer la BD
+            $pagetitle = 'Liste des repliques';
+            $tab_rep = ModelReplique::selectAll();     //appel au modèle pour gerer la BD
             require File::build_path(array('view','view.php'));  //"redirige" vers la vue
         }
         public static function read($args){
 
             $view = 'detail';
-            $pagetitle = 'Détail de la voiture';
-            $v = ModelVoiture::select($args['immatriculation']);
+            $pagetitle = 'Détail de la Replique';
+            $v = ModelReplique::select($args['idReplique']);
             if($v == false or $v == null){
-                throw new Exception("Voiture introuvable", 1);
+                throw new Exception("Replique introuvable", 1);
             }
             require File::build_path(array('view','view.php'));  //"redirige" vers la vue
         }
         public static function create($args=null){
-            $v = new ModelVoiture();
+            $v = new ModelReplique();
             foreach($args as $key => $value) {
                 $v->set($key, $value);
             }
             $view = 'update';
-            $pagetitle = 'Enregistrez une voiture';
+            $pagetitle = 'Enregistrez une Replique';
             require File::build_path(array('view','view.php'));  //"redirige" vers la vue
         }
         public static function created($args){
 
             $view = 'created';
-            $pagetitle = 'Liste des voitures';
-            $tab_v = ModelVoiture::selectAll();     //appel au modèle pour gerer la BD
-            ModelVoiture::save($args);
-            $v = ModelVoiture::select($args['immatriculation']);
+            $pagetitle = 'Liste des Repliques';
+            $tab_rep = ModelReplique::selectAll();     //appel au modèle pour gerer la BD
+            ModelReplique::save($args);
+            $v = ModelReplique::select($args['idReplique']);
             require_once File::build_path(array('view','view.php'));
         }
         public static function error() {
@@ -52,27 +52,27 @@
 
             $view="deleted";
             $pagetitle='SUPRESSION';
-            $immat = $args['immatriculation'];
-            ModelVoiture::delete($immat);
-            $tab_v = ModelVoiture::selectAll();
+            $id = $args['idReplique'];
+            ModelReplique::delete($id);
+            $tab_rep = ModelReplique::selectAll();
             require_once File::build_path(array('view', 'view.php'));
         }
         public static function update($args) {
 
             $view="update";
             $pagetitle='Mise à jour';
-            $immat = $args['immatriculation'];
-            $v = ModelVoiture::select($immat);
+            $id = $args['idReplique'];
+            $v = ModelReplique::select($id);
             require_once File::build_path(array('view', 'view.php'));
         }
 
         public static function updated($args) {
 
             $view = 'updated';
-            $pagetitle = 'Liste des voitures';
-            $tab_v = ModelVoiture::selectAll();     //appel au modèle pour gerer la BD
-            $immat = $args['immatriculation'];
-            $v = ModelVoiture::select($immat);
+            $pagetitle = 'Liste des Repliques';
+            $tab_rep = ModelReplique::selectAll();     //appel au modèle pour gerer la BD
+            $id = $args['idReplique'];
+            $v = ModelReplique::select($id);
             $v->update($args);
             require_once File::build_path(array('view','view.php'));
         }

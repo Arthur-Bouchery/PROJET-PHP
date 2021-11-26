@@ -1,5 +1,5 @@
 <?php
-require_once File::build_path(array("controller","ControllerVoiture.php"));
+require_once File::build_path(array("controller","ControllerRepliques.php"));
 require_once File::build_path(array("controller","ControllerUtilisateur.php"));
 require_once File::build_path(array("controller","ControllerTrajet.php"));
 
@@ -12,7 +12,7 @@ $controller_default=$_COOKIE['pagePref'];
 
 //gestion du controlleur a utiliser: 
 if (!isset($_GET['controller'])) {
-    $controller = 'voiture';
+    $controller = $controller_default;
 } else {
     $controller = $_GET['controller'];
 }
@@ -20,7 +20,7 @@ if (!isset($_GET['controller'])) {
 $controller_class = 'Controller'.ucfirst($controller);
 
 if (!class_exists($controller_class)) {
-    ControllerVoiture::error();
+    ControllerRepliques::error();
     exit();
 } 
 

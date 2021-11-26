@@ -1,15 +1,17 @@
 <?php
 	require_once File::build_path(array("config","Conf.php"));
     require_once File::build_path(array("model","Model.php"));
-    class ModelVoiture extends Model{
+    class ModelReplique extends Model{
     	// On inclut les fichiers de classe PHP avec require_once
         // pour éviter qu'ils soient inclus plusieurs fois
 
-    	private $marque;
-		private $couleur;
-		private $immatriculation;
-        protected static $object = 'voiture';
-        protected static $primary='immatriculation';
+    	private $idReplique;
+		private $nomReplique;
+		private $nomCategorie;
+		private $stockReplique;
+		private $idMunitions;
+        protected static $object = 'p_Repliques';
+        protected static $primary='idReplique';
 
         // La syntaxe ... = NULL signifie que l'argument est optionel
 		// Si un argument optionnel n'est pas fourni,
@@ -43,8 +45,8 @@
 
 		
 
-		public function getImmatriculation(){
-			return $this->immatriculation;
+		public function getId(){
+			return $this->idReplique;
 		}
 
 

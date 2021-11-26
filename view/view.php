@@ -6,7 +6,7 @@
     </head>
     <header>
         <p style="border: 1px solid black;text-align:center;padding-right:1em;">
-            <a href="index.php?action=readAll&controller=voiture">Acceuil Voiture</a>
+            <a href="index.php?action=readAll&controller=Replique">Magasin Repliques</a>
             <a href="index.php?action=readAll&controller=utilisateur">Acceuil Utilisateur</a>
             <a href="index.php?action=readAll&controller=trajet">Acceuil Trajet</a>
             <a href="view/preferences.html">preferences</a>
@@ -22,7 +22,7 @@
     </body>
     <footer>
         <p style="border: 1px solid black;text-align:center;padding-right:1em;">
-             Site de covoiturage de ...
+             Site de vente de ...
         </p>
     </footer>
 </html>
