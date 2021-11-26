@@ -1,4 +1,5 @@
 <?php
 	setcookie("pagePref", $_GET['pagePref'],0);
-	require_once('index.php');
+	$_COOKIE['pagePref'] = $_GET['pagePref'];
+	require_once "index.php";
 ?>
