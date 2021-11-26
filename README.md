@@ -1,6 +1,9 @@
 # PROJET-PHP
 Ceci est un repo gitHub visant à faciliter le travail autour d'un projet universitaire de création de site avec PHP.
 
+###IMPORTANT:
+    -COMMIT/PUSH après chaque modification VALIDE, travaillez sur vos branches pour pouvoir utiliser le gestionnaire de merge de gitHUB. 
+
 ### Sujet du site: Vente de répliques (Air-soft/Paintball/Nerf...)
 
 [Critères de notation](https://docs.google.com/spreadsheets/d/1oUd7fe0K8WZhI2TPRRvgZ2xPZf5H22CUvlpcXEMD3Ao/edit#gid=0)
