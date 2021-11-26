@@ -1,28 +1,27 @@
-
-    <body>
-        <form method="GET" action="./index.php">
+<body>
+    <form method="GET" action="./index.php">
+        <input type='hidden' name='action' value="<?php echo($_GET['action']."d"); ?>">
+        <input type='hidden' name='controller' value='utilisateur'>
         <fieldset>
             <legend>Mon formulaire :</legend>
             <p>
                 <?php
-                echo('<label for="immat_id">Immatriculation</label> :
-                    <input type="text" value="'.$immatriculation.'" name="immatriculation" id="immat_id"'.$val.' required/>');
+                echo('<label for="login_id">Login</label> :
+                    <input type="text" value="'.htmlspecialchars($u->get('login')).'" name="login" id="login_id" '.($_GET["action"] != "create" ? "readonly" : "required").'/>');
                 echo '</p>
                 <p>';
-                echo ('<label for="m_id">Marque</label> :
-                    <input type="text" value="'.$marque.'" name="marque" id="m_id" required/>');
+                echo ('<label for="prenom_id">Prenom</label> :
+                    <input type="text" value="'.htmlspecialchars($u->get('prenom')).'" name="prenom" id="prenom_id" required/>');
                 echo '</p>
                 <p>';
-                echo ('<label for="c_id">Couleur</label> :
-                    <input type="text" value="'.$couleur.'" name="couleur" id="c_id" required/>');
+                echo ('<label for="nom_id">Nom</label> :
+                    <input type="text" value="'.htmlspecialchars($u->get('nom')).'" name="nom" id="nom_id" required/>');
                 echo '</p>
                 <p>';
-                 ?>
+                ?>
                 <input type="submit" value="Envoyer" />
-                <input type='hidden' name='action' value=<?php echo "'".$action."'"?>>
+                
             </p>
-        </fieldset>
-</form>
-
-
-    </body>
+        </fieldset> 
+    </form>
+</body>
