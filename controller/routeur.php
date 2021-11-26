@@ -5,7 +5,7 @@ require_once File::build_path(array("controller","ControllerTrajet.php"));
 
 //implementation des preferences du cookie
 if(!isset($_COOKIE['pagePref'])){
-    $controller_default='voiture';
+    $controller_default='replique';
 }else{
     $controller_default=$_COOKIE['pagePref'];
 
