@@ -22,7 +22,7 @@
     </body>
     <footer>
         <p style="border: 1px solid black;text-align:center;padding-right:1em;">
-             Site de vente de ...
+             Site de vente de Repliques d'armes à feu (pour petit enfant)
         </p>
     </footer>
 </html>

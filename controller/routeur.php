@@ -1,5 +1,5 @@
 <?php
-require_once File::build_path(array("controller","ControllerRepliques.php"));
+require_once File::build_path(array("controller","ControllerReplique.php"));
 require_once File::build_path(array("controller","ControllerUtilisateur.php"));
 require_once File::build_path(array("controller","ControllerTrajet.php"));
 

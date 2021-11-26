@@ -1,7 +1,7 @@
 <?php
     require_once File::build_path(array("model","ModelReplique.php"));
     // chargement du modèle
-    class ControllerRepliques {
+    class ControllerReplique {
 
 
         protected static $object = 'p_Repliques';
