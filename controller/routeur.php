@@ -3,6 +3,14 @@ require_once File::build_path(array("controller","ControllerVoiture.php"));
 require_once File::build_path(array("controller","ControllerUtilisateur.php"));
 require_once File::build_path(array("controller","ControllerTrajet.php"));
 
+//implementation des preferences du cookie
+if(!isset($_COOKIE['pagePref'])){
+$controller_default='voiture';
+}else{
+$controller_default=$_COOKIE['pagePref'];
+}
+
+//gestion du controlleur a utiliser:
 if (!isset($_GET['controller'])) {
     $controller = 'voiture';
 } else {
@@ -16,7 +24,7 @@ if (!class_exists($controller_class)) {
     exit();
 } 
 
-
+// On teste si une action a été spécifiée
 if (!isset($_GET['action'])) {
 	$action = 'readAll';
 } 
