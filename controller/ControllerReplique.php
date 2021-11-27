@@ -3,7 +3,7 @@
     // chargement du modèle
     class ControllerReplique {
 
-
+        //on utilise ça ?
         protected static $object = 'p_Repliques';
 
 
