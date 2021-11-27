@@ -21,7 +21,7 @@ if (!isset($_GET['controller'])) {
 $controller_class = 'Controller'.ucfirst($controller);
 
 if (!class_exists($controller_class)) {
-    ControllerRepliques::error();
+    ControllerReplique::error();
     exit();
 }
 
