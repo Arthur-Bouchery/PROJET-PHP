@@ -1,6 +1,0 @@
-<?php
-
-class ControllerConnexion
-{
-    //todo
-}

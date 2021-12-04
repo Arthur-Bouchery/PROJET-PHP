@@ -8,8 +8,11 @@
     	private $idReplique;
 		private $nomReplique;
 		private $nomCategorie;
-		private $stockRepliques;
-        protected static $object = 'p_Repliques';
+
+		private $stockReplique;
+		private $idMunitions;
+        protected static $object = 'Repliques';
+
         protected static $primary='idReplique';
 
         // La syntaxe ... = NULL signifie que l'argument est optionel
