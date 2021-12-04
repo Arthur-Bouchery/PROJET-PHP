@@ -3,7 +3,7 @@
 require_once File::build_path(array("model","ModelUtilisateur.php"));
 class ControllerUtilisateur {
 
-    protected static $object='p_utilisateur';
+    protected static $object='p_Clients';
     
     public static function readAll($args=null) {
         $view = 'list';

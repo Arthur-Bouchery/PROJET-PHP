@@ -4,10 +4,13 @@ require_once File::build_path(array("config","Conf.php"));
 require_once File::build_path(array("model","Model.php"));
 class ModelUtilisateur extends Model{
     
-    private $login;
-    private $nom;
-    private $prenom;
-    protected static $object = 'p_utilisateur';
+    private $codeClient;
+    private $nomClient;
+    private $prenomClient;
+    private $mailClient;
+    private $telClient;
+    private $mdpClient;
+    protected static $object = 'p_Clients';
     protected static $primary='login';
 
     public function __construct($l = NULL, $n = NULL, $p = NULL) {
@@ -15,9 +18,9 @@ class ModelUtilisateur extends Model{
           // Si aucun de $m, $c et $i sont nuls,
           // c'est forcement qu'on les a fournis
           // donc on retombe sur le constructeur à 3 arguments
-          $this->login = $l;
-          $this->nom = $n;
-          $this->prenom = $p;
+          $this->codeClient = $l;
+          $this->nomClient = $n;
+          $this->prenomClient = $p;
         }
     }
 
@@ -25,8 +28,8 @@ class ModelUtilisateur extends Model{
         return $this->$nom_attribut;
     }
 
-    public function getLogin() {
-        return $this->login;
+    public function getCodeClient() {
+        return $this->codeClient;
     }
 
     public function set($nom_attribut, $valeur) {
