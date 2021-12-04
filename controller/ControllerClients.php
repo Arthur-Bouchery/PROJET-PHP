@@ -5,6 +5,11 @@ class ControllerClients {
 
     protected static $object='Clients';
 
+    public static function home(){
+        //renvoyer sur l'affichage du compte si connecté
+        //proposer la connexion et l'inscription si non
+    }
+
     public static function signUp(){
         //creer un Client en vérifiant les informations
         //signIn()

@@ -27,7 +27,8 @@ if (!class_exists($controller_class)) {
 
 // On teste si une action a été spécifiée
 if (!isset($_GET['action'])) {
-    $action = 'readAll';
+    if($controller='clients') $action = 'home';
+    else $action = 'readAll';
 }
 else if(in_array($_GET['action'], get_class_methods(new $controller_class()))) {
     // On recupère l'action passée dans l'URL
