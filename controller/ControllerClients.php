@@ -5,13 +5,26 @@ class ControllerClients {
 
     protected static $object='Clients';
 
+    public static function home(){
+        //renvoyer sur l'affichage du compte si connecté
+        //proposer la connexion et l'inscription si non
+        $view = 'home';
+        $pagetitle = 'Connexion';
+        require_once File::build_path(array('view','view.php'));
+    }
+
     public static function signUp(){
         //creer un Client en vérifiant les informations
         //signIn()
     }
 
     public static function signIn(){
-        //ouvrir la session
+        $view="signIn";
+        $pagetitle='Connexion';
+        require_once File::build_path(array('view', 'view.php'));
+    }
+    public static function signedIn($args){
+        //ouvrir la session du client
     }
 
     public static function signOut(){
