@@ -3,7 +3,7 @@
 require_once File::build_path(array("model","ModelUtilisateur.php"));
 class ControllerUtilisateur {
 
-    protected static $object='utilisateur';
+    protected static $object='p_utilisateur';
     
     public static function readAll($args=null) {
         $view = 'list';
@@ -14,7 +14,7 @@ class ControllerUtilisateur {
     public static function read($args){
 
         $view = 'detail';
-        $pagetitle = "Détail de l'utilisateur";
+        $pagetitle = "Détail de l'p_utilisateur";
         $u = ModelUtilisateur::select($args['login']);
         if($u == false or $u == null){
             throw new Exception("Utilisateur introuvable", 1);
@@ -43,7 +43,7 @@ class ControllerUtilisateur {
             $u->set($key, $value);
         }
         $view = 'update';
-        $pagetitle = 'Enregistrez un utilisateur';
+        $pagetitle = 'Enregistrez un p_utilisateur';
         require File::build_path(array('view','view.php'));  //"redirige" vers la vue
     }
 

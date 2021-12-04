@@ -7,7 +7,7 @@ class ModelUtilisateur extends Model{
     private $login;
     private $nom;
     private $prenom;
-    protected static $object = 'utilisateur'; 
+    protected static $object = 'p_utilisateur';
     protected static $primary='login';
 
     public function __construct($l = NULL, $n = NULL, $p = NULL) {
