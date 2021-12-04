@@ -11,6 +11,7 @@
             <a href="index.php?action=readAll&controller=trajet">Acceuil Trajet</a>
             <a href="index.php?&controller=clients">profil</a>
             <a href="view/preferences.html">preferences</a>
+            <a href="index.php?action=readAll&controller=panier">Panier</a>
         </p>
     </header>
     <body>
