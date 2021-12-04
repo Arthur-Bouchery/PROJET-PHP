@@ -4,16 +4,20 @@
         <fieldset>
             <legend>Mon formulaire :</legend>
             <p>
-                <label for="immat_id">Immatriculation</label> :
-                <input type="text" placeholder="256AB34" name="immatriculation" id="immat_id" required/>
+                <label for="id_Replique">idReplique</label> :
+                <input type="text" placeholder="256AB34" name="idReplique" id="id_Replique" required/>
             </p>
             <p>
-                <label for="m_id">Marque</label> :
-                <input type="text" placeholder="renault" name="marque" id="m_id" required/>
+                <label for="id_nomReplique">nom de la réplique</label> :
+                <input type="text" placeholder="Arbalète cassée" name="nomReplique" id="id_nomReplique" required/>
             </p>
             <p>
-                <label for="c_id">Couleur</label> :
-                <input type="text" placeholder="noir" name="couleur" id="c_id" required/>
+                <label for="id_nomCat">nom de la Catégorie</label> :
+                <input type="text" placeholder="pétée" name="nomCategorie" id="id_nomCat" required/>
+            </p>
+            <p>
+                <label for="id_stock">stock de la réplique</label> :
+                <input type="text" placeholder="0" name="stockRepliques" id="id_stock" required/>
             </p>
             <p>
                 <input type="submit" value="Envoyer" />

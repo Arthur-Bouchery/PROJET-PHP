@@ -1,5 +1,5 @@
 
 <?php
 foreach ($tab_rep as $v)
-echo '<p> Replique d\'id ' . htmlspecialchars($v->getId()) . " <a href=?action=read&Id=".$v->getId().">Details</a> </p>";
+echo '<p> Replique d\'id ' . htmlspecialchars($v->get("idReplique")) . " <a href=?controller=replique&action=read&idReplique=".$v->get("idReplique").">Details</a> </p>";
 ?>
