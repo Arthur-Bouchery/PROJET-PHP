@@ -7,7 +7,7 @@ class ControllerClients {
     
     public static function readAll($args=null) {
         $view = 'list';
-        $pagetitle = 'Liste des utilisateurs';
+        $pagetitle = 'Liste des Clients';
         $tab_u = Model_Clients::selectAll();     //appel au modèle pour gerer la BD
         require_once File::build_path(array('view','view.php'));  //"redirige" vers la vue
     }
