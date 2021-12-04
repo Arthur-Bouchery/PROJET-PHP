@@ -1,21 +1,21 @@
 <?php
 
-require_once File::build_path(array("model","ModelUtilisateur.php"));
-class ControllerUtilisateur {
+require_once File::build_path(array("model","ModelClients.php"));
+class ControllerClients {
 
     protected static $object='p_Clients';
     
     public static function readAll($args=null) {
         $view = 'list';
         $pagetitle = 'Liste des utilisateurs';
-        $tab_u = ModelUtilisateur::selectAll();     //appel au modèle pour gerer la BD
+        $tab_u = Model_Clients::selectAll();     //appel au modèle pour gerer la BD
         require_once File::build_path(array('view','view.php'));  //"redirige" vers la vue
     }
     public static function read($args){
 
         $view = 'detail';
         $pagetitle = "Détail de l'p_utilisateur";
-        $u = ModelUtilisateur::select($args['login']);
+        $u = Model_Clients::select($args['login']);
         if($u == false or $u == null){
             throw new Exception("Utilisateur introuvable", 1);
         }
@@ -32,13 +32,13 @@ class ControllerUtilisateur {
         $view="deleted";
         $pagetitle='SUPRESSION';
         $login = $args['login'];
-        ModelUtilisateur::delete($login);
-        $tab_u = ModelUtilisateur::selectAll();
+        Model_Clients::delete($login);
+        $tab_u = Model_Clients::selectAll();
         require_once File::build_path(array('view', 'view.php'));
     }
 
     public static function create($args=null){
-        $u = new ModelUtilisateur();
+        $u = new Model_Clients();
         foreach($args as $key => $value) {
             $u->set($key, $value);
         }
@@ -52,7 +52,7 @@ class ControllerUtilisateur {
         $view="update";
         $pagetitle='Mise à jour';
         $login = $args['login'];
-        $u = ModelUtilisateur::select($login);
+        $u = Model_Clients::select($login);
         require_once File::build_path(array('view', 'view.php'));
     }
 
@@ -60,9 +60,9 @@ class ControllerUtilisateur {
 
         $view = 'updated';
         $pagetitle = 'Liste des joueurs';
-        $tab_u = ModelUtilisateur::selectAll();     //appel au modèle pour gerer la BD
+        $tab_u = Model_Clients::selectAll();     //appel au modèle pour gerer la BD
         $login = $args['login'];
-        $u = ModelUtilisateur::select($login);
+        $u = Model_Clients::select($login);
         if($u) $u->update($args);
         require_once File::build_path(array('view','view.php'));
     }
@@ -71,9 +71,9 @@ class ControllerUtilisateur {
 
         $view = 'created';
         $pagetitle = 'Liste des utilisateurs';
-        $tab_u = ModelUtilisateur::selectAll();     //appel au modèle pour gerer la BD
-        ModelUtilisateur::save($args);
-        $u = ModelUtilisateur::select($args['login']);
+        $tab_u = Model_Clients::selectAll();     //appel au modèle pour gerer la BD
+        Model_Clients::save($args);
+        $u = Model_Clients::select($args['login']);
         require_once File::build_path(array('view','view.php'));
     }
 }

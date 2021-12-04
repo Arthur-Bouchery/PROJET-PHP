@@ -1,6 +1,0 @@
-<?php
-
-class ControllerAcceuil
-{
-    //todo
-}

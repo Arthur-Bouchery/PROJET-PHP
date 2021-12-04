@@ -2,7 +2,7 @@
 <?php
 require_once File::build_path(array("config","Conf.php"));
 require_once File::build_path(array("model","Model.php"));
-class ModelUtilisateur extends Model{
+class ModelClients extends Model{
     
     private $codeClient;
     private $nomClient;
@@ -11,7 +11,7 @@ class ModelUtilisateur extends Model{
     private $telClient;
     private $mdpClient;
     protected static $object = 'p_Clients';
-    protected static $primary='login';
+    protected static $primary='codeClient';
 
     public function __construct($l = NULL, $n = NULL, $p = NULL) {
         if (!is_null($l) && !is_null($n) && !is_null($p)) {
