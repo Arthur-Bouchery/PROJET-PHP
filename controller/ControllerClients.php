@@ -8,6 +8,9 @@ class ControllerClients {
     public static function home(){
         //renvoyer sur l'affichage du compte si connecté
         //proposer la connexion et l'inscription si non
+        $view = 'home';
+        $pagetitle = 'Connexion';
+        require_once File::build_path(array('view','view.php'));
     }
 
     public static function signUp(){
@@ -16,7 +19,12 @@ class ControllerClients {
     }
 
     public static function signIn(){
-        //ouvrir la session
+        $view="signIn";
+        $pagetitle='Connexion';
+        require_once File::build_path(array('view', 'view.php'));
+    }
+    public static function signedIn($args){
+        //ouvrir la session du client
     }
 
     public static function signOut(){
