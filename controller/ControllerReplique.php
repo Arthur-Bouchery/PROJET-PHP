@@ -4,7 +4,7 @@
     class ControllerReplique {
 
         //on utilise ça ?
-        protected static $object = 'p_Repliques';
+        protected static $object = 'Repliques';
 
 
         public static function readAll($args=null) {

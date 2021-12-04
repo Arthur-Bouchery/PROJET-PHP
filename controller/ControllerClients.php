@@ -3,7 +3,20 @@
 require_once File::build_path(array("model","ModelClients.php"));
 class ControllerClients {
 
-    protected static $object='p_Clients';
+    protected static $object='Clients';
+
+    public static function signUp(){
+        //creer un Client en vérifiant les informations
+        //signIn()
+    }
+
+    public static function signIn(){
+        //ouvrir la session
+    }
+
+    public static function signOut(){
+        //fermer la session
+    }
     
     public static function readAll($args=null) {
         $view = 'list';
@@ -14,7 +27,7 @@ class ControllerClients {
     public static function read($args){
 
         $view = 'detail';
-        $pagetitle = "Détail de l'p_utilisateur";
+        $pagetitle = "Détail de l'Clients";
         $u = Model_Clients::select($args['login']);
         if($u == false or $u == null){
             throw new Exception("Utilisateur introuvable", 1);
@@ -43,7 +56,7 @@ class ControllerClients {
             $u->set($key, $value);
         }
         $view = 'update';
-        $pagetitle = 'Enregistrez un p_utilisateur';
+        $pagetitle = 'Enregistrez un Clients';
         require File::build_path(array('view','view.php'));  //"redirige" vers la vue
     }
 
