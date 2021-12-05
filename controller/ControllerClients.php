@@ -13,7 +13,7 @@ class ControllerClients {
         require_once File::build_path(array('view','view.php'));
     }
 
-    public static function signUp(){
+    public static function signUp($args){
         //creer un Client en vérifiant les informations
         //signIn()
     }
@@ -24,7 +24,20 @@ class ControllerClients {
         require_once File::build_path(array('view', 'view.php'));
     }
     public static function signedIn($args){
-        //ouvrir la session du client
+        $emailClient = $args['emailClient'];
+        $mdp_hash = Security::hacher($args['mdpClient']);
+        $validUser = ModelClients::checkPassword($emailClient,$mdp_hash);
+        if(!$validUser){
+            //si non valide on renvoie sur la page de connexion
+            //todo: afficher un message d'erreursur la page connexion
+            self::signIn();
+        }else {
+            $view="detail";
+            $pagetitle='Profil Utilisateur';
+            //ouvrir la session du client
+            $_SESSION['codeClient']=ModelClients::getCodeClientByEmailAndPassword($emailClient,$mdp_hash);
+            require_once File::build_path(array('view','view.php'));
+        }
     }
 
     public static function signOut(){

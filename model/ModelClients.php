@@ -24,6 +24,74 @@ class ModelClients extends Model{
         }
     }
 
+    public static function checkEmail($emailClient){
+        $sql="SELECT DISTINCT codeClient FROM p_Clients WHERE emailClient=$emailClient";
+        $req_prep = Model::getPDO()->prepare($sql);
+
+        //on execute la requete
+        try{
+            $req_prep->execute($req_prep);
+            $tab = $req_prep->fetchAll();
+            if (sizeof($tab)>=1){ //si on a un ou plusieurs résultat
+                return true;
+            }else return false; //si aucun compte avec cet email
+        }catch (PDOException $e) {
+            if (Conf::getDebug()) {
+                echo $sql;
+                echo $e->getMessage(); // affiche un message d'erreur
+            } else {
+                echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
+            }
+            die();
+        }
+    }
+
+    public static function checkPassword($emailClient, $mdp_hash){
+        $sql="SELECT DISTINCT codeClient FROM p_Clients WHERE emailClient=$emailClient AND mdpClient=$mdp_hash";
+        $req_prep = Model::getPDO()->prepare($sql);
+
+
+        //on execute la requete
+        try{
+            $req_prep->execute($req_prep);
+            $tab = $req_prep->fetchAll();
+            if (sizeof($tab)==1){ //si on a un résultat, la connexion peut se poursuivre
+                return true;
+            }else return false; //si la requête renvoie plus d'une ligne ou si elle est vide, alors problème
+        }catch (PDOException $e) {
+            if (Conf::getDebug()) {
+                echo $sql;
+                echo $e->getMessage(); // affiche un message d'erreur
+            } else {
+                echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
+            }
+            die();
+        }
+    }
+
+    public static function getCodeClientByEmailAndPassword($emailClient, $mdp_hash){
+        $sql="SELECT DISTINCT codeClient FROM p_Clients WHERE emailClient=$emailClient AND mdpClient=$mdp_hash";
+        $req_prep = Model::getPDO()->prepare($sql);
+
+
+        //on execute la requete
+        try{
+            $req_prep->execute($req_prep);
+            $tab = $req_prep->fetchAll();
+            if (sizeof($tab)==1) { //si on a un résultat, la connexion peut se poursuivre
+                return $tab[0];
+            }
+        }catch(PDOException $e){
+            if (Conf::getDebug()) {
+                echo $sql;
+                echo $e->getMessage(); // affiche un message d'erreur
+            } else {
+                echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
+            }
+            die();
+        }
+    }
+
     public function get($nom_attribut){
         return $this->$nom_attribut;
     }

@@ -37,23 +37,22 @@
 
 
 
-                static public function selectAll(){
-                    
+              static public function selectAll(){
 
-                    $table_name = static::$object;
+                $table_name = static::$object;
 
-                    $class_name = 'Model'.ucfirst(substr($table_name, 2));
+                $class_name = 'Model'.ucfirst(substr($table_name, 2));
 
-                    // On demande la table voiture a la bdd
-                    $pdo = Model::getPDO();
-                    $rep =$pdo->query("SELECT * FROM $table_name");
+                // On demande la table voiture a la bdd
+                $pdo = Model::getPDO();
+                $rep =$pdo->query("SELECT * FROM $table_name");
 
-                    //tableau d'objets de classe voiture
-                    $rep->setFetchMode(PDO::FETCH_CLASS, $class_name);
-                    return $rep->fetchAll();
-                }
+                //tableau d'objets de classe voiture
+                $rep->setFetchMode(PDO::FETCH_CLASS, $class_name);
+                return $rep->fetchAll();
+              }
 
-                public static function select($primary_value) {
+              public static function select($primary_value) {
 
                     $table_name = static::$object;
                     $class_name = 'Model'.ucfirst(substr($table_name, 2));
@@ -69,7 +68,7 @@
 				        //nomdutag => valeur, ...
 				    );
 				    // On donne les valeurs et on exécute la requête	 
-				    $req_prep->execute($values);
+				    $req_prep->execute($values); //todo: trycatch les amis
 
 				    // On récupère les résultats comme précédemment
 				    $req_prep->setFetchMode(PDO::FETCH_CLASS, $class_name);
@@ -78,9 +77,8 @@
 				    if (empty($tab))
 				        return false;
 				    return $tab[0];
-				}
-
-                public static function delete($primary_value) {
+              }
+              public static function delete($primary_value) {
                     
                     $table_name = static::$object;
                     $class_name = 'Model'.ucfirst($table_name);
@@ -100,8 +98,7 @@
 				    // On récupère les résultats comme précédemment
 				    $req_prep->setFetchMode(PDO::FETCH_CLASS, $class_name);
                 }
-
-                public function update($data){
+              public function update($data){
 
                     $table_name = static::$object;
                     $primary_key = static::$primary;
@@ -136,7 +133,7 @@
                     }
                 }
 
-                public static function save($data){
+              public static function save($data){
 					$table_name = static::$object;
                     $primary_key = static::$primary;
 
