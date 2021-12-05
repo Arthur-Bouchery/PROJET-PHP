@@ -141,7 +141,8 @@
                     $insert = "";
 
                     $value = "";
-                    
+
+                    //très dangereux et bugFriendly comme méthode d'enregistrement :(
                     unset($data["action"]);
                     unset($data["controller"]);
                     foreach($data as $key => $val) {
