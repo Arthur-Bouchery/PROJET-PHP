@@ -14,7 +14,7 @@ class ControllerPanier
     public static function set($args) { //commentez votre putain de code
         $args["qte"] = $args["qte"] ?? 1;
         $sessionPanier = $_SESSION["panier"] ?? array();
-        if ($args["qte"] == 0) {
+        if ($args["qte"] <= 0) {
             if (isset($sessionPanier[$args["idReplique"]])) {
                 unset($sessionPanier[$args["idReplique"]]);
             }
