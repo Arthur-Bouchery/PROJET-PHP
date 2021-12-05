@@ -11,7 +11,7 @@ class ControllerPanier
         require File::build_path(array('view','view.php'));  //"redirige" vers la vue
     }
 
-    public static function set($args) {
+    public static function set($args) { //commentez votre putain de code
         $args["qte"] = $args["qte"] ?? 1;
         $sessionPanier = $_SESSION["panier"] ?? array();
         if ($args["qte"] == 0) {
