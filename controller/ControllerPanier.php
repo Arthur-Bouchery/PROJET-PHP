@@ -10,7 +10,7 @@ class ControllerPanier
         $tab_panier = $_SESSION["panier"];     //appel au modèle pour gerer la BD
         require File::build_path(array('view','view.php'));  //"redirige" vers la vue
     }
-
+    //cette fonction devrait être ModelPanier::set($args)
     public static function set($args) { //commentez votre putain de code
         $args["qte"] = $args["qte"] ?? 1;
         $sessionPanier = $_SESSION["panier"] ?? array();
