@@ -107,7 +107,9 @@
                     $primary_key = static::$primary;
 
                     $set = "";
-                    
+
+                    //todo: méthode dangereuse à changer en suivant les tds de cours
+                    //au moindre champs supplémentaire dans $args tout plante
                     unset($data["action"]);
                     unset($data["controller"]);
                     foreach($data as $key => $value) {

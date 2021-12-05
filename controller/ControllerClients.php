@@ -34,14 +34,14 @@ class ControllerClients {
     public static function readAll($args=null) {
         $view = 'list';
         $pagetitle = 'Liste des Clients';
-        $tab_u = Model_Clients::selectAll();     //appel au modèle pour gerer la BD
+        $tab_u = ModelClients::selectAll();     //appel au modèle pour gerer la BD
         require_once File::build_path(array('view','view.php'));  //"redirige" vers la vue
     }
     public static function read($args){
 
         $view = 'detail';
         $pagetitle = "Détail de l'Clients";
-        $u = Model_Clients::select($args['login']);
+        $u = ModelClients::select($args['login']);
         if($u == false or $u == null){
             throw new Exception("Utilisateur introuvable", 1);
         }
@@ -58,13 +58,13 @@ class ControllerClients {
         $view="deleted";
         $pagetitle='SUPRESSION';
         $login = $args['login'];
-        Model_Clients::delete($login);
-        $tab_u = Model_Clients::selectAll();
+        ModelClients::delete($login);
+        $tab_u = ModelClients::selectAll();
         require_once File::build_path(array('view', 'view.php'));
     }
 
     public static function create($args=null){
-        $u = new Model_Clients();
+        $u = new ModelClients();
         foreach($args as $key => $value) {
             $u->set($key, $value);
         }
@@ -76,9 +76,9 @@ class ControllerClients {
     public static function update($args) {
 
         $view="update";
-        $pagetitle='Mise à jour';
-        $login = $args['login'];
-        $u = Model_Clients::select($login);
+        $pagetitle='Mise à jour des informations de profil';
+        $login = $args['idClient'];
+        $u = ModelClients::select($login);
         require_once File::build_path(array('view', 'view.php'));
     }
 
@@ -86,9 +86,12 @@ class ControllerClients {
 
         $view = 'updated';
         $pagetitle = 'Liste des joueurs';
-        $tab_u = Model_Clients::selectAll();     //appel au modèle pour gerer la BD
-        $login = $args['login'];
-        $u = Model_Clients::select($login);
+        $tab_u = ModelClients::selectAll();     //appel au modèle pour gerer la BD
+        $login = $args['codeClient'];
+        $u = ModelClients::select($login);
+        //encodage du mdp
+        $args['mdpClient'] = Security::hacher($args['mdpClient']);
+        //fin encodage
         if($u) $u->update($args);
         require_once File::build_path(array('view','view.php'));
     }
@@ -97,9 +100,12 @@ class ControllerClients {
 
         $view = 'created';
         $pagetitle = 'Liste des utilisateurs';
-        $tab_u = Model_Clients::selectAll();     //appel au modèle pour gerer la BD
-        Model_Clients::save($args);
-        $u = Model_Clients::select($args['login']);
+        //encodage du mdp
+        $args['mdpClient'] = Security::hacher($args['mdpClient']);
+        //fin encodage
+        ModelClients::save($args);
+        $tab_u = ModelClients::selectAll();     //appel au modèle pour gerer la BD
+        $u = ModelClients::select($args['codeClient']);
         require_once File::build_path(array('view','view.php'));
     }
 }
