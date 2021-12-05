@@ -7,11 +7,12 @@
     <header>
         <p style="border: 1px solid black;text-align:center;padding-right:1em;">
             <a href="index.php?action=readAll&controller=Replique">Magasin Repliques</a>
-            <a href="index.php?action=readAll&controller=utilisateur">Acceuil Utilisateur</a>
-            <a href="index.php?action=readAll&controller=trajet">Acceuil Trajet</a>
+            <!--<a href="index.php?action=readAll&controller=trajet">Acceuil Trajet</a>-->
             <a href="index.php?&controller=clients">profil</a>
             <a href="view/preferences.html">preferences</a>
             <a href="index.php?action=readAll&controller=panier">Panier</a>
+            administrateur :
+            <a href="index.php?action=readAll&controller=Clients">Gestion clients</a>
         </p>
     </header>
     <body>
