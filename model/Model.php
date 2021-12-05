@@ -108,38 +108,22 @@ class Model
         $req_prep->setFetchMode(PDO::FETCH_CLASS, $class_name);
     }
 
-    public function update($data)
-    {
-
-        $table_name = static::$object;
-        $primary_key = static::$primary;
-
-        $set = "";
-
-        //todo: méthode dangereuse à changer en suivant les tds de cours
-        //au moindre champs supplémentaire dans $args tout plante
-        unset($data["action"]);
-        unset($data["controller"]);
-        foreach ($data as $key => $value) {
-            if ($key != $primary_key) {
-                $set = $set . "$key=:$key, ";
-            }
-        }
-        $set = rtrim($set, ", ");
-
-        $sql = "UPDATE $table_name SET $set WHERE $primary_key=:$primary_key";
-        $req_prep = Model::getPDO()->prepare($sql);
-
-
-        //on execute la requete
+    public static function update($data) {
         try {
-            $req_prep->execute($data);
-        } catch (PDOException $e) {
-            if (Conf::getDebug()) {
-                echo $e->getMessage(); // affiche un message d'erreur
-            } else {
-                echo 'Une erreur est survenue <a href="https://webinfo.iutmontp.univ-montp2.fr/~bessej/td-php/TD5R/"> retour a la page d\'accueil </a>';
+            $set = ' ';
+            foreach ($data as $key => $value) {
+                $set = $set . "$key = :$key, ";
             }
+            $set = rtrim($set, ", ");
+
+            $o = static::$object;
+            $p = static::$primary;
+
+            $pdo = Model::getPDO()->prepare("UPDATE $o SET $set WHERE $p = :$p ;");
+            $pdo->execute($data);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
             die();
         }
     }
@@ -182,5 +166,3 @@ class Model
     }
 
 }
-
-?>
