@@ -13,6 +13,7 @@
             <a href="index.php?action=readAll&controller=panier">Panier</a>
             administrateur :
             <a href="index.php?action=readAll&controller=Clients">Gestion clients</a>
+            <a href="index.php?action=create&controller=Clients">Creer un Client</a>
         </p>
     </header>
     <body>
