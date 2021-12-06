@@ -54,7 +54,7 @@ class ModelClients extends Model{
         $table_name = static::$object;
         $class_name = 'Model'.ucfirst($table_name);
 
-        $sql="SELECT DISTINCT codeClient FROM clients WHERE mailClient=$emailClient AND mdpClient=$mdp_hash";
+        $sql="SELECT DISTINCT codeClient FROM clients WHERE mailClient='$emailClient' AND mdpClient=$mdp_hash";
         $req_prep = Model::getPDO()->prepare($sql);
 
 
