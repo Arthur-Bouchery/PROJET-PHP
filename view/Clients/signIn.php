@@ -1,6 +1,6 @@
 <form method="GET" action="./index.php">
     <input type='hidden' name='action' value="signedIn">
-    <input type='hidden' name='controller' value='utilisateur'>
+    <input type='hidden' name='controller' value='clients'>
     <fieldset>
         <legend>Connexion :</legend>
         <p>

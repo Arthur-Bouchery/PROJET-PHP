@@ -25,12 +25,16 @@ class ModelClients extends Model{
     }
 
     public static function checkEmail($emailClient){
-        $sql="SELECT DISTINCT codeClient FROM p_Clients WHERE emailClient=$emailClient";
+        $table_name = static::$object;
+        $class_name = 'Model'.ucfirst($table_name);
+
+        $sql="SELECT DISTINCT codeClient FROM p_Clients WHERE mailClient=$emailClient";
         $req_prep = Model::getPDO()->prepare($sql);
 
         //on execute la requete
         try{
-            $req_prep->execute($req_prep);
+            $req_prep->execute();
+            $req_prep->setFetchMode(PDO::FETCH_CLASS, $class_name);
             $tab = $req_prep->fetchAll();
             if (sizeof($tab)>=1){ //si on a un ou plusieurs résultat
                 return true;
@@ -47,13 +51,17 @@ class ModelClients extends Model{
     }
 
     public static function checkPassword($emailClient, $mdp_hash){
-        $sql="SELECT DISTINCT codeClient FROM p_Clients WHERE emailClient=$emailClient AND mdpClient=$mdp_hash";
+        $table_name = static::$object;
+        $class_name = 'Model'.ucfirst($table_name);
+
+        $sql="SELECT DISTINCT codeClient FROM clients WHERE mailClient=$emailClient AND mdpClient=$mdp_hash";
         $req_prep = Model::getPDO()->prepare($sql);
 
 
         //on execute la requete
         try{
-            $req_prep->execute($req_prep);
+            $req_prep->execute();
+            $req_prep->setFetchMode(PDO::FETCH_CLASS, $class_name);
             $tab = $req_prep->fetchAll();
             if (sizeof($tab)==1){ //si on a un résultat, la connexion peut se poursuivre
                 return true;
@@ -70,7 +78,7 @@ class ModelClients extends Model{
     }
 
     public static function getCodeClientByEmailAndPassword($emailClient, $mdp_hash){
-        $sql="SELECT DISTINCT codeClient FROM p_Clients WHERE emailClient=$emailClient AND mdpClient=$mdp_hash";
+        $sql="SELECT DISTINCT codeClient FROM clients WHERE emailClient=$emailClient AND mdpClient=$mdp_hash";
         $req_prep = Model::getPDO()->prepare($sql);
 
 
