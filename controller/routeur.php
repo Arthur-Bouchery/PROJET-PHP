@@ -1,46 +1,42 @@
 <?php
-    session_start();
-    require_once File::build_path(array("controller","ControllerReplique.php"));
-    require_once File::build_path(array("controller","ControllerClients.php"));
-    require_once File::build_path(array("controller","ControllerPanier.php"));
+session_start();
+require_once File::build_path(array("controller", "ControllerRepliques.php"));
+require_once File::build_path(array("controller", "ControllerClients.php"));
+require_once File::build_path(array("controller", "ControllerPanier.php"));
 
-    //implementation des preferences du cookie
-    if(!isset($_COOKIE['pagePref'])){
-        $controller_default='clients';
-    }else{
-        $controller_default=$_COOKIE['pagePref'];
+// Implémentation des préférences du cookie
+if (!isset($_COOKIE['pagePref'])) {
+    $controller_default = 'clients';
+} else {
+    $controller_default = $_COOKIE['pagePref'];
+}
 
-    }
+// Récupération de la variable controller
+$controller = $controller_default; // Controller par défaut si rien n'a été spécifié
+if (isset($_GET['controller'])) {
+    $controller = $_GET['controller'];
+}
 
-    //gestion du controlleur a utiliser:
-    if (!isset($_GET['controller'])) {
-        $controller = $controller_default;
-    } else {
-        $controller = $_GET['controller'];
-    }
+// Vérification que le controller existe
+$controller_class = 'Controller' . ucfirst($controller);
+if (!class_exists($controller_class)) {
+    ControllerRepliques::error();
+    exit();
+}
 
-    $controller_class = 'Controller'.ucfirst($controller);
+// Récupération de la variable action
+if (!isset($_GET['action'])) { // Actions par défaut si rien n'a été spécifié
+    if ($controller == 'client') $action = 'home'; // TODO s à clients
+    else $action = 'readAll';
+}
+else
+    $action = $_GET['action'];
 
-    if (!class_exists($controller_class)) {
-        ControllerReplique::error();
-        exit();
-    }
+// Vérification que l'action existe dans la classe
+$methodes = get_class_methods($controller_class);
+if (!in_array($action, $methodes)) {
+    $controller_class::error();
+    exit();
+}
 
-    // On teste si une action a été spécifiée
-    if (!isset($_GET['action'])) {
-        if($controller='clients') $action = 'home';
-        else $action = 'readAll';
-    }
-    else if(in_array($_GET['action'], get_class_methods(new $controller_class()))) {
-        // On recupère l'action passée dans l'URL
-        $action = $_GET['action'];
-        //on récupère tous les arguments passés
-        $args = $_GET;
-    }
-    else {
-        $controller_class::error();
-        exit();
-    }
-    // Appel de la méthode statique $action de ControllerVoiture
-    $controller_class::$action($_GET);
-?>
+$controller_class::$action();

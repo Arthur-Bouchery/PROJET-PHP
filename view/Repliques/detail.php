@@ -1,12 +1,12 @@
 <?php
-    echo htmlspecialchars($v->get('idReplique'));
-    echo htmlspecialchars(' '.$v->get('nomReplique'));
-    echo htmlspecialchars(' '.$v->get('nomCategorie'));
-    echo htmlspecialchars(' '.$v->get('stockRepliques').' ');
-    echo ('<a href="?controller=replique&action=delete&idReplique='.$v->get('idReplique').'"     >Supprimer</a>');
-    echo '<br>';
-    echo ('<a href="?controller=replique&action=update&idReplique='.$v->get('idReplique').'"     >Modifier</a>');
-    echo '<br>';
-    echo ('<a href="?controller=panier&action=set&idReplique='.$v->get('idReplique').'&qte=1"     >Ajouter</a>');
-    
-?>
+echo htmlspecialchars($r->get('idReplique'));
+echo htmlspecialchars(' ' . $r->get('nomReplique'));
+echo htmlspecialchars(' ' . $r->get('nomCategorie'));
+echo htmlspecialchars(' ' . $r->get('stockRepliques') . ' ');
+$rawUrlReplique = rawurlencode($r->get('idReplique'));
+echo '<br>';
+echo('<a href="?controller=repliques&action=delete&idReplique=' . $rawUrlReplique . '"     >Supprimer</a>');
+echo '<br>';
+echo('<a href="?controller=repliques&action=update&idReplique=' . $rawUrlReplique . '"     >Modifier</a>');
+echo '<br>';
+echo('<a href="?controller=panier&action=set&idReplique=' . $rawUrlReplique . '&qte=1"     >Ajouter au panier</a>');
