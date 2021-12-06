@@ -121,7 +121,7 @@ class ControllerClients {
             //fin encodage
             ModelClients::save($args);
             $tab_u = ModelClients::selectAll();     //appel au modèle pour gerer la BD
-            $u = ModelClients::select($args['codeClient']);
+            //$u = ModelClients::select($args['codeClient']); je m'en carre le fion de cette ligne
             require_once File::build_path(array('view', 'view.php'));
         }
     }
