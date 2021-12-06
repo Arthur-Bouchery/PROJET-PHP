@@ -25,6 +25,7 @@
         }
         public static function create($args=null){
             $v = new ModelRepliques();
+            $v->set("idReplique", null);
             foreach($args as $key => $value) {
                 $v->set($key, $value);
             }
@@ -33,12 +34,11 @@
             require File::build_path(array('view','view.php'));  //"redirige" vers la vue
         }
         public static function created($args){
-
             $view = 'created';
             $pagetitle = 'Liste des Repliques';
             $tab_rep = ModelRepliques::selectAll();     //appel au modèle pour gerer la BD
+            //$v = ModelRepliques::select($args['idReplique']);
             ModelRepliques::save($args);
-            $v = ModelRepliques::select($args['idReplique']);
             require_once File::build_path(array('view','view.php'));
         }
         public static function error() {
@@ -65,7 +65,6 @@
         }
 
         public static function updated($args) {
-
             $view = 'updated';
             $pagetitle = 'Liste des Repliques';
             $tab_rep = ModelRepliques::selectAll();     //appel au modèle pour gerer la BD

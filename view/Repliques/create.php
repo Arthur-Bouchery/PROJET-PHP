@@ -4,10 +4,6 @@
         <fieldset>
             <legend>Mon formulaire :</legend>
             <p>
-                <label for="id_Replique">idReplique</label> :
-                <input type="text" placeholder="256AB34" name="idReplique" id="id_Replique" required/>
-            </p>
-            <p>
                 <label for="id_nomReplique">nom de la réplique</label> :
                 <input type="text" placeholder="Arbalète cassée" name="nomReplique" id="id_nomReplique" required/>
             </p>

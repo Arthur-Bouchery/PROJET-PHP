@@ -98,6 +98,7 @@
 				    // On récupère les résultats comme précédemment
 				    $req_prep->setFetchMode(PDO::FETCH_CLASS, $class_name);
                 }
+
               public function update($data){
 
                     $table_name = static::$object;
