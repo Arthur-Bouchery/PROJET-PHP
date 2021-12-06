@@ -22,9 +22,9 @@ class ControllerClients {
         require_once File::build_path(array('view', 'view.php'));
     }
 
-    public static function signedIn($args){
-        $emailClient = $args['emailClient'];
-        $mdp_hash = Security::hacher($args['mdpClient']);
+    public static function signedIn(){
+        $emailClient = $_GET['emailClient'];
+        $mdp_hash = Security::hacher($_GET['mdpClient']);
         $validUser = ModelClients::checkPassword($emailClient,$mdp_hash);
         if(!$validUser){
             self::signIn();
@@ -46,17 +46,17 @@ class ControllerClients {
         return static::home();
     }
     
-    public static function readAll($args=null) {
+    public static function readAll() {
         $view = 'list';
         $pagetitle = 'Liste des Clients';
         $tab_u = ModelClients::selectAll();     //appel au modèle pour gerer la BD
         require_once File::build_path(array('view','view.php'));  //"redirige" vers la vue
     }
-    public static function read($args){
+    public static function read(){
 
         $view = 'detail';
         $pagetitle = "Détail du Clients";
-        $u = ModelClients::select($args['codeClient']);
+        $u = ModelClients::select($_GET['codeClient']);
         if($u == false or $u == null){
             throw new Exception("Utilisateur introuvable", 1);
         }
@@ -69,21 +69,21 @@ class ControllerClients {
         require_once File::build_path(array('view', 'view.php'));
     }
 
-    public static function delete($args) {
+    public static function delete() {
         $view="deleted";
         $pagetitle='SUPRESSION';
-        $login = $args['login'];
+        $login = $_GET['login'];
         ModelClients::delete($login);
         $tab_u = ModelClients::selectAll();
         require_once File::build_path(array('view', 'view.php'));
     }
 
-    public static function create($args=null){
+    public static function create(){
         if (isset($_SESSION['codeClient'])) {
             return static::home();
         }
         $u = new ModelClients();
-        foreach($args as $key => $value) {
+        foreach($_GET as $key => $value) {
             $u->set($key, $value);
         }
         $view = 'update';
@@ -91,41 +91,44 @@ class ControllerClients {
         require File::build_path(array('view','view.php'));  //"redirige" vers la vue
     }
 
-    public static function update($args) {
+    public static function update() {
 
         $view="update";
         $pagetitle='Mise à jour des informations de profil';
-        $login = $args['idClient'];
+        $login = $_GET['codeClient'];
         $u = ModelClients::select($login);
         require_once File::build_path(array('view', 'view.php'));
     }
 
-    public static function updated($args) {
+    public static function updated() {
         if($_GET['mdpClient']==$_GET['confirm_mdpClient']) {
             $view = 'updated';
             $pagetitle = 'Liste des joueurs';
             $tab_u = ModelClients::selectAll();     //appel au modèle pour gerer la BD
-            $login = $args['codeClient'];
+            $login = $_GET['codeClient'];
             $u = ModelClients::select($login);
             //encodage du mdp
-            $args['mdpClient'] = Security::hacher($args['mdpClient']);
+            $_GET['mdpClient'] = Security::hacher($_GET['mdpClient']);
             //fin encodage
-            if ($u) $u->update($args);
+            if ($u) $u->update($_GET);
             require_once File::build_path(array('view', 'view.php'));
         }
     }
 
-    public static function created($args){
+    public static function created(){
         if($_GET['mdpClient']==$_GET['confirm_mdpClient']) {
-            unset($args['confirm_mdpClient']);
+            unset($_GET['confirm_mdpClient']);
             $view = 'created';
             $pagetitle = 'Liste des utilisateurs';
             //encodage du mdp
-            $args['mdpClient'] = Security::hacher($args['mdpClient']);
+            $_GET['mdpClient'] = Security::hacher($_GET['mdpClient']);
             //fin encodage
-            ModelClients::save($args);
+            unset($_GET['confirm_mdpClient']);
+            unset($_GET['action']);
+            unset($_GET['controller']);
+            ModelClients::save($_GET);
             $tab_u = ModelClients::selectAll();     //appel au modèle pour gerer la BD
-            //$u = ModelClients::select($args['codeClient']); je m'en carre le fion de cette ligne
+            //$u = ModelClients::select($_GET['codeClient']); je m'en carre le fion de cette ligne
             require_once File::build_path(array('view', 'view.php'));
         }
     }
