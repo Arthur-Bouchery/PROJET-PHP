@@ -72,7 +72,7 @@ class ControllerRepliques
     public static function update()
     {
         $r = ModelRepliques::select($_GET['idReplique']);
-        if ($r== false) {
+        if ($r == false) {
             self::errorRepliqueInexistante();
             exit();
         }
