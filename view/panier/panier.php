@@ -15,3 +15,5 @@ foreach ($tab_panier as $k => $v) {
     <?php
 }
 ?>
+    <p>
+        <a href="?controller=commandes&action=commander">Passer la commande</a>
