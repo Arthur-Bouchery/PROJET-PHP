@@ -18,10 +18,12 @@
                     <input type="text" value="<?php echo htmlspecialchars($v->get('nomCategorie')) ;?>" name="nomCategorie" id="nc_id" required/>
             </p>
             <p>
-
+                <label for="id_stock">Stock de la réplique :</label>
+                    <input type="text" value="<?php echo htmlspecialchars($v->get('stockRepliques')); ?>" name="stockRepliques" id="id_stock" required/>
+            <p>
             <input type="submit" value="Envoyer" />
             
-        </p>
+        <p>
     </fieldset> 
 </form>
 
