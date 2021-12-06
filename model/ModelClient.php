@@ -10,7 +10,7 @@ class ModelClient extends Model{
     private $mailClient;
     private $telClient;
     private $mdpClient;
-    protected static $object = 'p_Clients';
+    protected static $object = 'clients';
     protected static $primary='codeClient';
 
     public function __construct($l = NULL, $n = NULL, $p = NULL) {
