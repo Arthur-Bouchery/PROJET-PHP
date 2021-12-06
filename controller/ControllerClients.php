@@ -54,8 +54,8 @@ class ControllerClients {
     public static function read($args){
 
         $view = 'detail';
-        $pagetitle = "Détail de l'Clients";
-        $u = ModelClients::select($args['login']);
+        $pagetitle = "Détail du Clients";
+        $u = ModelClients::select($args['codeClient']);
         if($u == false or $u == null){
             throw new Exception("Utilisateur introuvable", 1);
         }
