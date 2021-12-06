@@ -7,7 +7,7 @@
 <header>
     <p style="border: 1px solid black;text-align:center;padding-right:1em;">
         <a href="index.php?action=readAll&controller=repliques">Repliques</a>
-        <a href="index.php?&controller=clients">Profil</a>
+        <a href="index.php?&controller=clients&action=home">Profil</a>
         <a href="view/preferences.html">Préférences</a>
         <a href="index.php?action=readAll&controller=panier">Panier</a>
         <br>Pannel administrateur :
