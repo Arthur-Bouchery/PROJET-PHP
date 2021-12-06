@@ -24,7 +24,7 @@
 				  if (!is_null($conducteur_login) && !is_null($prix) && !is_null($nbPlaces)
                   && !is_null($dateT) && !is_null($arrivee) && !is_null($depart) && !is_null($id)) {
 				    // Si aucun de $m, $c et $i sont nuls,
-				    // c'est forcement qu'on les a fournis
+				    // c'est forcément qu'on les a fournis
 				    // donc on retombe sur le constructeur à 3 arguments
 				    $this->conducteur_login = $conducteur_login;
 				    $this->prix = $prix;

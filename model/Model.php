@@ -24,7 +24,7 @@ class Model
             if (Conf::getDebug()) {
                 echo $e->getMessage(); // affiche un message d'erreur
             } else {
-                echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
+                echo '<br>Une erreur est survenue - <a href="">Retour à la page d\'accueil</a>';
             }
             die();
         }
@@ -41,7 +41,7 @@ class Model
     {
         try {
             $table_name = static::$object;
-            $class_name = 'Model' . ucfirst(substr($table_name, 2));
+            $class_name = 'Model' . ucfirst($table_name);
 
             $pdo = Model::getPDO();
             $rep = $pdo->query("SELECT * FROM $table_name");
@@ -62,7 +62,7 @@ class Model
     {
         try {
             $table_name = static::$object;
-            $class_name = 'Model' . ucfirst(substr($table_name, 2));
+            $class_name = 'Model' . ucfirst($table_name);
             $primary_key = static::$primary;
 
             $req_prep = Model::getPDO()->prepare("SELECT * FROM $table_name WHERE $primary_key=:nom_tag");
@@ -88,27 +88,22 @@ class Model
 
     public static function delete($primary_value)
     {
+        try {
+            $table_name = static::$object;
+            $primary_key = static::$primary;
 
-        $table_name = static::$object;
-        $class_name = 'Model' . ucfirst($table_name);
-        $primary_key = static::$primary;
-
-        $sql = "DELETE FROM $table_name WHERE $primary_key=:nom_tag";
-        // Préparation de la requête
-        $req_prep = Model::getPDO()->prepare($sql);
-
-
-        $values = array("nom_tag" => $primary_value);
-        //nomdutag => valeur, ...
-
-        // On donne les valeurs et on exécute la requête
-        $req_prep->execute($values);
-
-        // On récupère les résultats comme précédemment
-        $req_prep->setFetchMode(PDO::FETCH_CLASS, $class_name);
+            $req_prep = Model::getPDO()->prepare("DELETE FROM $table_name WHERE $primary_key=:nom_tag");
+            $values = array("nom_tag" => $primary_value);
+            $req_prep->execute($values);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            echo '<br>Une erreur est survenue - <a href="">Retour à la page d\'accueil</a>';
+            die();
+        }
     }
 
-    public static function update($data) {
+    public static function update($data)
+    {
         try {
             $set = ' ';
             foreach ($data as $key => $value) {
@@ -130,39 +125,30 @@ class Model
 
     public static function save($data)
     {
-        $table_name = static::$object;
-        $primary_key = static::$primary;
-
-        $insert = "";
-
-        $value = "";
-
-        //très dangereux et bugFriendly comme méthode d'enregistrement :(
-        unset($data["action"]);
-        unset($data["controller"]);
-        foreach ($data as $key => $val) {
-            $insert = $insert . "$key, ";
-            $value = $value . ":$key, ";
-        }
-        $insert = rtrim($insert, ", ");
-        $value = rtrim($value, ", ");
-
-        $sql = "INSERT INTO $table_name ($insert) VALUES ($value)";
-        $req_prep = Model::getPDO()->prepare($sql);
-
-
-        //on execute la requete
         try {
-            $req_prep->execute($data);
-        } catch (PDOException $e) {
-            if (Conf::getDebug()) {
-                echo $sql;
-                echo $e->getMessage(); // affiche un message d'erreur
-            } else {
-                echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
+            $table_name = static::$object;
+            $primary_key = static::$primary;
+
+            $insert = '';
+            $values = '';
+            foreach ($data as $key => $value) {
+                $insert = $insert . "$key, ";
+                $values = $values . ":$key, ";
             }
+            $insert = rtrim($insert, ", ");
+            $values = rtrim($values, ", ");
+
+            $pdo = Model::getPDO()->prepare("INSERT INTO $table_name ($insert) VALUES ($values);");
+            $pdo->execute($data);
+            return true;
+        } catch (PDOException $e) {
+            if ($e->getCode() == 23000) // S'il y a déjà cet objet dans la BDD
+                return false;
+            else if (Conf::getDebug()) {
+                echo $e->getMessage();
+            } else
+                echo '<br>Une erreur est survenue - <a href="">Retour à la page d\'accueil</a>';
             die();
         }
     }
-
 }

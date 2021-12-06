@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once File::build_path(array("controller", "ControllerReplique.php"));
+require_once File::build_path(array("controller", "ControllerRepliques.php"));
 require_once File::build_path(array("controller", "ControllerClient.php"));
 require_once File::build_path(array("controller", "ControllerTrajet.php"));
 require_once File::build_path(array("controller", "ControllerPanier.php"));
@@ -21,7 +21,7 @@ if (isset($_GET['controller'])) {
 // Vérification que le controller existe
 $controller_class = 'Controller' . ucfirst($controller);
 if (!class_exists($controller_class)) {
-    ControllerReplique::error();
+    ControllerRepliques::error();
     exit();
 }
 

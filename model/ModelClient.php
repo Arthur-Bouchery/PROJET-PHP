@@ -2,7 +2,7 @@
 <?php
 require_once File::build_path(array("config","Conf.php"));
 require_once File::build_path(array("model","Model.php"));
-class ModelClients extends Model{
+class ModelClient extends Model{
     
     private $codeClient;
     private $nomClient;

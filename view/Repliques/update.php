@@ -1,29 +1,27 @@
-<form method="GET" action="./index.php">
-    <input type='hidden' name='action' value="<?php echo($_GET['action']."d"); ?>">
-    <input type='hidden' name='controller' value='replique'>
-    <fieldset>
-        <legend>Mon formulaire :</legend>
-        <p>
-            <?php
-            echo('<label for="id_id">Immatriculation</label> :
-                <input type="text" value="'.htmlspecialchars($v->get('idreplique')).'" name="idReplique" id="id_id" '.($_GET["action"] != "create" ? "readonly" : "required").'/>');
-            echo '</p>
-            <p>';
-            echo ('<label for="n_id">Marque</label> :
-                <input type="text" value="'.htmlspecialchars($v->get('nomReplique')).'" name="nomReplique" id="n_id" required/>');
-            echo '</p>
-            <p>';
-            echo ('<label for="nc_id">Couleur</label> :
-                <input type="text" value="'.htmlspecialchars($v->get('nomCategorie')).'" name="nomCategorie" id="nc_id" required/>');
-            echo '</p>
-            <p>';
-            echo ('<label for="mun_id">Couleur</label> :
-                <input type="text" value="'.htmlspecialchars($v->get('idMunition')).'" name="idMunition" id="mun_id" required/>');
-            echo '</p>
-            <p>';
-            ?>
-            <input type="submit" value="Envoyer" />
-            
-        </p>
-    </fieldset> 
-</form>
+<?php
+echo '
+    <form method="POST" action="index.php?controller=' . self::$object . '&action=' . ($_GET['action']."d") . '">
+        <fieldset>
+            <legend>Modifier une voiture :</legend>
+            <p>
+                <label for="id_id">Identifiant</label> :
+                <input type="text" value="' . htmlspecialchars($r->get('idReplique')) . '" name="idReplique" id="id_id "' . ($_GET["action"] != "create" ? "readonly" : "required") . '/>
+            </p>
+            <p>
+                <label for="nom_id">Nom</label> :
+                <input type="text" value="' . htmlspecialchars($r->get('nomReplique')) . '" name="nomReplique" id="nom_id" required />
+            </p>
+            <p>
+                <label for="categorie_id">Catégorie</label>
+                <input type="text" value="' . htmlspecialchars($r->get('nomCategorie')) . '" name="nomCategorie" id="categorie_id" required />
+            </p>
+            <p>
+                <label for="stock_id">Quantité en stock</label>
+                <input type="text" value="' . htmlspecialchars($r->get('stockRepliques')) . '" name="stockRepliques" id="stock_id" required />
+            </p>
+            <p>
+                <input type="submit" value="' . ($_GET["action"] == "create" ? "Créer la réplique" : "Mettre à jour") . '" />
+            </p>
+        </fieldset>
+    </form>
+    ';
