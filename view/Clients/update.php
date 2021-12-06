@@ -29,11 +29,11 @@
         <?php if($_GET["action"] == "create") { ?>
         <p>
             <label for="nom_id">mot de passe</label> :
-            <input type="text" <?php if (isset($u)){ echo 'value="'.htmlspecialchars($u->get('mdpClient'));} ?>" name="mdpClient" id="nom_id" required/>
+            <input type="password" <?php if (isset($u)){ echo 'value="'.htmlspecialchars($u->get('mdpClient'));} ?>" name="mdpClient" id="nom_id" required/>
         </p>
         <p>
             <label for="nom_id">Confirmation mot de passe</label> :
-            <input type="text" <?php if (isset($u)){ echo 'value="'.htmlspecialchars($u->get('mdpClient'));} ?>" name="confirm_mdpClient" id="nom_id" required/>
+            <input type="password" <?php if (isset($u)){ echo 'value="'.htmlspecialchars($u->get('mdpClient'));} ?>" name="confirm_mdpClient" id="nom_id" required/>
         </p>
         <?php } ?>
 

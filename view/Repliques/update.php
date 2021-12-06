@@ -9,7 +9,6 @@
                     <input type="text" value="<?php echo htmlspecialchars($v->get('idReplique')) ;?>" name="idReplique" id="id_id" readonly/>
             <p>
             <?php } ?>
-
                 <label for="n_id">nom de la réplique :</label>
                     <input type="text" value="<?php echo htmlspecialchars($v->get('nomReplique')) ;?>" name="nomReplique" id="n_id" required/>
             </p>

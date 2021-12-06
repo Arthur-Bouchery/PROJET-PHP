@@ -2,7 +2,7 @@
 
 class Security
 {
-    private static $seed = 'MdpDeG@merz:';
+    private static $seed = 'MdpDeGamerz:';
     public static function hacher($texte_en_clair) {
         //assaisonnement  du mdp
         $texte_hache = hash('sha256', ''.static::$seed.$texte_en_clair);
@@ -10,3 +10,5 @@ class Security
     }
 
 }
+
+?>

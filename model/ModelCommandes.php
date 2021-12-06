@@ -36,12 +36,13 @@ class ModelCommandes extends Model
         $this->$nom_attribut = $valeur;
     }
 
-    public function afficher(){
-    	echo "numéro de commande : ".$this->codeCommande;
-    	echo " ".$this->marque;
-    	echo ' '.$this->couleur;
-    	echo '<br>';
-    }
+//    public function afficher(){
+//    	echo "numéro de commande : ".$this->codeCommande;
+//    	echo "date de la Commande ".$this->marque;
+//    	echo "code du client ".$this->couleur;
+//        echo ""
+//    	echo '<br>';
+//    }
 }
 
 ?>

@@ -54,16 +54,16 @@ class ModelClients extends Model{
         $table_name = static::$object;
         $class_name = 'Model'.ucfirst($table_name);
 
-        $sql="SELECT DISTINCT codeClient FROM clients WHERE mailClient='$emailClient' AND mdpClient=$mdp_hash";
+        $sql="SELECT codeClient FROM clients WHERE mailClient=:mail AND mdpClient=:mdp";
         $req_prep = Model::getPDO()->prepare($sql);
 
 
         //on execute la requete
         try{
-            $req_prep->execute();
+            $req_prep->execute(array('mail' => $emailClient, 'mdp' => $mdp_hash));
             $req_prep->setFetchMode(PDO::FETCH_CLASS, $class_name);
             $tab = $req_prep->fetchAll();
-            if (sizeof($tab)==1){ //si on a un résultat, la connexion peut se poursuivre
+            if (sizeof($tab)==1){ //si on a un résultat, la connexion peut se poursuivre;
                 return true;
             }else return false; //si la requête renvoie plus d'une ligne ou si elle est vide, alors problème
         }catch (PDOException $e) {
@@ -78,16 +78,16 @@ class ModelClients extends Model{
     }
 
     public static function getCodeClientByEmailAndPassword($emailClient, $mdp_hash){
-        $sql="SELECT DISTINCT codeClient FROM clients WHERE emailClient=$emailClient AND mdpClient=$mdp_hash";
+        $sql="SELECT DISTINCT codeClient FROM clients WHERE mailClient='$emailClient' AND mdpClient='$mdp_hash'";
         $req_prep = Model::getPDO()->prepare($sql);
 
 
         //on execute la requete
         try{
-            $req_prep->execute($req_prep);
+            $req_prep->execute();
             $tab = $req_prep->fetchAll();
             if (sizeof($tab)==1) { //si on a un résultat, la connexion peut se poursuivre
-                return $tab[0];
+                return $tab[0]['codeClient'];
             }
         }catch(PDOException $e){
             if (Conf::getDebug()) {

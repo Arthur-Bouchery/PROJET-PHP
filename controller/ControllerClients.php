@@ -13,12 +13,10 @@ class ControllerClients {
         require_once File::build_path(array('view','view.php'));
     }
 
-    public static function signUp($args){
-        //creer un Client en vérifiant les informations
-        //signIn()
-    }
-
     public static function signIn(){
+        if (isset($_SESSION['codeClient'])) {
+            return static::home();
+        }
         $view="signIn";
         $pagetitle='Connexion';
         require_once File::build_path(array('view', 'view.php'));
@@ -29,20 +27,23 @@ class ControllerClients {
         $mdp_hash = Security::hacher($args['mdpClient']);
         $validUser = ModelClients::checkPassword($emailClient,$mdp_hash);
         if(!$validUser){
-            //si non valide on renvoie sur la page de connexion
-            //todo: afficher un message d'erreursur la page connexion
             self::signIn();
         }else {
             $view="detail";
             $pagetitle='Profil Utilisateur';
             //ouvrir la session du client
             $_SESSION['codeClient']=ModelClients::getCodeClientByEmailAndPassword($emailClient,$mdp_hash);
+            $u = ModelClients::select($_SESSION['codeClient']);
             require_once File::build_path(array('view','view.php'));
         }
     }
 
     public static function signOut(){
-        //fermer la session
+        if (isset($_SESSION['codeClient'])) {
+            unset($_SESSION['codeClient']);
+            session_destroy();
+        }
+        return static::home();
     }
     
     public static function readAll($args=null) {
@@ -78,6 +79,9 @@ class ControllerClients {
     }
 
     public static function create($args=null){
+        if (isset($_SESSION['codeClient'])) {
+            return static::home();
+        }
         $u = new ModelClients();
         foreach($args as $key => $value) {
             $u->set($key, $value);
