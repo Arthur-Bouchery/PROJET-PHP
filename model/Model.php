@@ -98,6 +98,7 @@
 				    // On récupère les résultats comme précédemment
 				    $req_prep->setFetchMode(PDO::FETCH_CLASS, $class_name);
                 }
+
               public function update($data){
 
                     $table_name = static::$object;
@@ -105,10 +106,6 @@
 
                     $set = "";
 
-                    //todo: méthode dangereuse à changer en suivant les tds de cours
-                    //au moindre champs supplémentaire dans $args tout plante
-                    unset($data["action"]);
-                    unset($data["controller"]);
                     foreach($data as $key => $value) {
                         if ($key != $primary_key) {
                         $set = $set."$key=:$key, ";
@@ -141,9 +138,8 @@
 
                     $value = "";
 
-                    //très dangereux et bugFriendly comme méthode d'enregistrement :(
-                    unset($data["action"]);
-                    unset($data["controller"]);
+
+
                     foreach($data as $key => $val) {
                         $insert = $insert."$key, ";
                         $value = $value.":$key, ";

@@ -34,7 +34,6 @@
             require File::build_path(array('view','view.php'));  //"redirige" vers la vue
         }
         public static function created($args){
-
             $view = 'created';
             $pagetitle = 'Liste des Repliques';
             $tab_rep = ModelRepliques::selectAll();     //appel au modèle pour gerer la BD
@@ -66,7 +65,6 @@
         }
 
         public static function updated($args) {
-
             $view = 'updated';
             $pagetitle = 'Liste des Repliques';
             $tab_rep = ModelRepliques::selectAll();     //appel au modèle pour gerer la BD
