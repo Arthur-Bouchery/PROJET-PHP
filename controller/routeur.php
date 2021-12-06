@@ -2,7 +2,6 @@
     session_start();
     require_once File::build_path(array("controller","ControllerReplique.php"));
     require_once File::build_path(array("controller","ControllerClients.php"));
-    require_once File::build_path(array("controller","ControllerTrajet.php"));
     require_once File::build_path(array("controller","ControllerPanier.php"));
 
     //implementation des preferences du cookie
