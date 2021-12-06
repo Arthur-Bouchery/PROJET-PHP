@@ -8,7 +8,6 @@
 
 
         public static function readAll($args=null) {
-
             $view = 'list';
             $pagetitle = 'Liste des repliques';
             $tab_rep = ModelRepliques::selectAll();     //appel au modèle pour gerer la BD

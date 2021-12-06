@@ -41,7 +41,7 @@
 
                 $table_name = static::$object;
 
-                $class_name = 'Model'.ucfirst(substr($table_name, 2));
+                $class_name = 'Model'.ucfirst($table_name);
 
                 // On demande la table voiture a la bdd
                 $pdo = Model::getPDO();
@@ -55,7 +55,7 @@
               public static function select($primary_value) {
 
                     $table_name = static::$object;
-                    $class_name = 'Model'.ucfirst(substr($table_name, 2));
+                    $class_name = 'Model'.ucfirst($table_name);
                     $primary_key = static::$primary;
 
 
