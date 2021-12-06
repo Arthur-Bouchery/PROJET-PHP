@@ -5,7 +5,7 @@
         <legend>Mon formulaire :</legend>
         <p>
             <?php
-            echo('<label for="id_id">Immatriculation</label> :
+            echo('<label for="id_id">idReplique</label> :
                 <input type="text" value="'.htmlspecialchars($v->get('idreplique')).'" name="idReplique" id="id_id" '.($_GET["action"] != "create" ? "readonly" : "required").'/>');
             echo '</p>
             <p>';
@@ -15,10 +15,6 @@
             <p>';
             echo ('<label for="nc_id">Couleur</label> :
                 <input type="text" value="'.htmlspecialchars($v->get('nomCategorie')).'" name="nomCategorie" id="nc_id" required/>');
-            echo '</p>
-            <p>';
-            echo ('<label for="mun_id">Couleur</label> :
-                <input type="text" value="'.htmlspecialchars($v->get('idMunition')).'" name="idMunition" id="mun_id" required/>');
             echo '</p>
             <p>';
             ?>

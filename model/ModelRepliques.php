@@ -11,7 +11,7 @@
 
 		private $stockReplique;
 		private $idMunitions;
-        protected static $object = 'Repliques';
+        protected static $object = 'repliques';
 
         protected static $primary='idReplique';
 
