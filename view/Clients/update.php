@@ -36,6 +36,10 @@
             <input type="password" <?php if (isset($u)){ echo 'value="'.htmlspecialchars($u->get('mdpClient'));} ?>" name="confirm_mdpClient" id="nom_id" required/>
         </p>
         <?php } ?>
+        <p>
+            <label for="admin_id">ADMIN : </label>
+            <input type="checkbox" name="admin" value="1">
+        </p>
 
         <input type="submit" value="Envoyer" />
     </fieldset> 

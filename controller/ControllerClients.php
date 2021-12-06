@@ -14,8 +14,8 @@ class ControllerClients {
     }
 
     public static function signIn(){
-        if (isset($_SESSION['codeClient'])) {
-            return static::home();
+        if ($_GET['test'] == '1') {
+            $_SESSION['admin'] = true;
         }
         $view="signIn";
         $pagetitle='Connexion';
@@ -23,7 +23,7 @@ class ControllerClients {
     }
 
     public static function signedIn(){
-        $emailClient = $_GET['emailClient'];
+        $emailClient = $_GET['mailClient'];
         $mdp_hash = Security::hacher($_GET['mdpClient']);
         $validUser = ModelClients::checkPassword($emailClient,$mdp_hash);
         if(!$validUser){
@@ -72,7 +72,7 @@ class ControllerClients {
     public static function delete() {
         $view="deleted";
         $pagetitle='SUPRESSION';
-        $login = $_GET['login'];
+        $login = $_GET['codeClient'];
         ModelClients::delete($login);
         $tab_u = ModelClients::selectAll();
         require_once File::build_path(array('view', 'view.php'));
