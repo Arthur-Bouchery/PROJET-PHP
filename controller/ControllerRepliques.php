@@ -37,7 +37,6 @@ class ControllerRepliques
 
     public static function created()
     {
-        // TODO vérifier que les types des valeurs sont respectés (NUMBER, VARCHAR)
         $data = array(
             'idReplique' => $_POST['idReplique'],
             'nomReplique' => $_POST['nomReplique'],
@@ -86,7 +85,6 @@ class ControllerRepliques
 
     public static function updated()
     {
-        // TODO vérifier que les types des valeurs sont respectés (NUMBER, VARCHAR)
         $data = array(
             'idReplique' => $_POST['idReplique'],
             'nomReplique' => $_POST['nomReplique'],
