@@ -23,6 +23,7 @@ class ControllerClients {
         $pagetitle='Connexion';
         require_once File::build_path(array('view', 'view.php'));
     }
+
     public static function signedIn($args){
         $emailClient = $args['emailClient'];
         $mdp_hash = Security::hacher($args['mdpClient']);
@@ -96,30 +97,33 @@ class ControllerClients {
     }
 
     public static function updated($args) {
-
-        $view = 'updated';
-        $pagetitle = 'Liste des joueurs';
-        $tab_u = ModelClients::selectAll();     //appel au modèle pour gerer la BD
-        $login = $args['codeClient'];
-        $u = ModelClients::select($login);
-        //encodage du mdp
-        $args['mdpClient'] = Security::hacher($args['mdpClient']);
-        //fin encodage
-        if($u) $u->update($args);
-        require_once File::build_path(array('view','view.php'));
+        if($_GET['mdpClient']==$_GET['confirm_mdpClient']) {
+            $view = 'updated';
+            $pagetitle = 'Liste des joueurs';
+            $tab_u = ModelClients::selectAll();     //appel au modèle pour gerer la BD
+            $login = $args['codeClient'];
+            $u = ModelClients::select($login);
+            //encodage du mdp
+            $args['mdpClient'] = Security::hacher($args['mdpClient']);
+            //fin encodage
+            if ($u) $u->update($args);
+            require_once File::build_path(array('view', 'view.php'));
+        }
     }
 
     public static function created($args){
-
-        $view = 'created';
-        $pagetitle = 'Liste des utilisateurs';
-        //encodage du mdp
-        $args['mdpClient'] = Security::hacher($args['mdpClient']);
-        //fin encodage
-        ModelClients::save($args);
-        $tab_u = ModelClients::selectAll();     //appel au modèle pour gerer la BD
-        $u = ModelClients::select($args['codeClient']);
-        require_once File::build_path(array('view','view.php'));
+        if($_GET['mdpClient']==$_GET['confirm_mdpClient']) {
+            unset($args['confirm_mdpClient']);
+            $view = 'created';
+            $pagetitle = 'Liste des utilisateurs';
+            //encodage du mdp
+            $args['mdpClient'] = Security::hacher($args['mdpClient']);
+            //fin encodage
+            ModelClients::save($args);
+            $tab_u = ModelClients::selectAll();     //appel au modèle pour gerer la BD
+            $u = ModelClients::select($args['codeClient']);
+            require_once File::build_path(array('view', 'view.php'));
+        }
     }
 }
 

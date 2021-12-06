@@ -1,4 +1,4 @@
 <?php
 foreach ($tab_u as $u)
-echo '<p> Login : ' . htmlspecialchars($u->getLogin()) . " <a href=?controller=Clients&action=read&login=".$u->getLogin().">Details</a> </p>";
+echo '<p> code Client : ' . htmlspecialchars($u->getCodeClient()) . " <a href=?controller=Clients&action=read&codeClient=".$u->getCodeClient().">Details</a> </p>";
 ?>
