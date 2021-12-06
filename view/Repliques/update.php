@@ -3,23 +3,25 @@
     <input type='hidden' name='controller' value='replique'>
     <fieldset>
         <legend>Mon formulaire :</legend>
-        <p>
-            <?php
-            echo('<label for="id_id">idReplique</label> :
-                <input type="text" value="'.htmlspecialchars($v->get('idreplique')).'" name="idReplique" id="id_id" '.($_GET["action"] != "create" ? "readonly" : "required").'/>');
-            echo '</p>
-            <p>';
-            echo ('<label for="n_id">Marque</label> :
-                <input type="text" value="'.htmlspecialchars($v->get('nomReplique')).'" name="nomReplique" id="n_id" required/>');
-            echo '</p>
-            <p>';
-            echo ('<label for="nc_id">Couleur</label> :
-                <input type="text" value="'.htmlspecialchars($v->get('nomCategorie')).'" name="nomCategorie" id="nc_id" required/>');
-            echo '</p>
-            <p>';
-            ?>
+
+            <?php if($v->get('idReplique') !== null) { ?>
+                <label for="id_id">idReplique : </label>
+                    <input type="text" value="<?php echo htmlspecialchars($v->get('idReplique')) ;?>" name="idReplique" id="id_id" readonly/>
+            <p>
+            <?php } ?>
+
+                <label for="n_id">nom de la réplique :</label>
+                    <input type="text" value="<?php echo htmlspecialchars($v->get('nomReplique')) ;?>" name="nomReplique" id="n_id" required/>
+            </p>
+            <p>
+                <label for="nc_id">nom de la catégorie :</label>
+                    <input type="text" value="<?php echo htmlspecialchars($v->get('nomCategorie')) ;?>" name="nomCategorie" id="nc_id" required/>
+            </p>
+            <p>
+
             <input type="submit" value="Envoyer" />
             
         </p>
     </fieldset> 
 </form>
+

@@ -14,6 +14,7 @@
             administrateur :
             <a href="index.php?action=readAll&controller=Clients">Gestion clients</a>
             <a href="index.php?action=create&controller=Clients">Creer un Client</a>
+            <a href="index.php?action=create&controller=Replique">Creer un article</a>
         </p>
     </header>
     <body>

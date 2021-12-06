@@ -8,9 +8,8 @@
     	private $idReplique;
 		private $nomReplique;
 		private $nomCategorie;
+		private $stockRepliques;
 
-		private $stockReplique;
-		private $idMunitions;
         protected static $object = 'repliques';
 
         protected static $primary='idReplique';
