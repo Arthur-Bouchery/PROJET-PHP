@@ -23,14 +23,16 @@ class ControllerClients {
         $emailClient = $_GET['mailClient'];
         $mdp_hash = Security::hacher($_GET['mdpClient']);
         $validUser = ModelClients::checkPassword($emailClient,$mdp_hash);
+
         if(!$validUser){
             self::signIn();
         }else {
-            $view="detail";
+            $view="home";
             $pagetitle='Profil Utilisateur';
             //ouvrir la session du client
             $_SESSION['codeClient']=ModelClients::getCodeClientByEmailAndPassword($emailClient,$mdp_hash);
-            $ad = ModelClients::select($_GET['codeClient']);
+            $ad = ModelClients::select($_SESSION['codeClient']);
+            $_SESSION['prenomClient'] = $ad->get('prenomClient');
             $admin = $ad->get('admin');
             if ($admin) {
                 $_SESSION['admin'] = true;
@@ -43,6 +45,7 @@ class ControllerClients {
     public static function signOut(){
         if (isset($_SESSION['codeClient'])) {
             unset($_SESSION['codeClient']);
+            unset($_SESSION['admin']);
             session_destroy();
         }
         return static::home();
@@ -81,15 +84,8 @@ class ControllerClients {
     }
 
     public static function create(){
-        if (isset($_SESSION['codeClient'])) {
-            return static::home();
-        }
-        $u = new ModelClients();
-        foreach($_GET as $key => $value) {
-            $u->set($key, $value);
-        }
         $view = 'update';
-        $pagetitle = 'Enregistrez un Clients';
+        $pagetitle = 'Enregistrez un Client';
         require File::build_path(array('view','view.php'));  //"redirige" vers la vue
     }
 
