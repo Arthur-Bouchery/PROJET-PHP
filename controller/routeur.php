@@ -1,5 +1,8 @@
 <?php
 session_start();
+if (!isset($_SESSION['panier'])) {
+$_SESSION['panier'] = array();
+}
 require_once File::build_path(array("controller", "ControllerRepliques.php"));
 require_once File::build_path(array("controller", "ControllerClients.php"));
 require_once File::build_path(array("controller", "ControllerPanier.php"));

@@ -14,9 +14,6 @@ class ControllerClients {
     }
 
     public static function signIn(){
-        if ($_GET['test'] == '1') {
-            $_SESSION['admin'] = true;
-        }
         $view="signIn";
         $pagetitle='Connexion';
         require_once File::build_path(array('view', 'view.php'));
@@ -26,13 +23,20 @@ class ControllerClients {
         $emailClient = $_GET['mailClient'];
         $mdp_hash = Security::hacher($_GET['mdpClient']);
         $validUser = ModelClients::checkPassword($emailClient,$mdp_hash);
+
         if(!$validUser){
             self::signIn();
         }else {
-            $view="detail";
+            $view="home";
             $pagetitle='Profil Utilisateur';
             //ouvrir la session du client
             $_SESSION['codeClient']=ModelClients::getCodeClientByEmailAndPassword($emailClient,$mdp_hash);
+            $ad = ModelClients::select($_SESSION['codeClient']);
+            $_SESSION['prenomClient'] = $ad->get('prenomClient');
+            $admin = $ad->get('admin');
+            if ($admin) {
+                $_SESSION['admin'] = true;
+            }
             $u = ModelClients::select($_SESSION['codeClient']);
             require_once File::build_path(array('view','view.php'));
         }
@@ -41,6 +45,7 @@ class ControllerClients {
     public static function signOut(){
         if (isset($_SESSION['codeClient'])) {
             unset($_SESSION['codeClient']);
+            unset($_SESSION['admin']);
             session_destroy();
         }
         return static::home();
@@ -79,15 +84,8 @@ class ControllerClients {
     }
 
     public static function create(){
-        if (isset($_SESSION['codeClient'])) {
-            return static::home();
-        }
-        $u = new ModelClients();
-        foreach($_GET as $key => $value) {
-            $u->set($key, $value);
-        }
         $view = 'update';
-        $pagetitle = 'Enregistrez un Clients';
+        $pagetitle = 'Enregistrez un Client';
         require File::build_path(array('view','view.php'));  //"redirige" vers la vue
     }
 
@@ -101,7 +99,22 @@ class ControllerClients {
     }
 
     public static function updated() {
-        if($_GET['mdpClient']==$_GET['confirm_mdpClient']) {
+        unset($_GET['action']);
+        unset($_GET['controller']);
+        if ($_GET['mdpClient'] == "") {
+            $view = 'updated';
+            $pagetitle = 'Liste des joueurs';
+            $tab_u = ModelClients::selectAll();     //appel au modèle pour gerer la BD
+            $login = $_GET['codeClient'];
+            $u = ModelClients::select($login);
+            //récup ancien mdp
+            $_GET['mdpClient'] = $u->get('mdpClient');
+            //fin récup
+            unset($_GET['confirm_mdpClient']);
+            if ($u) $u->update($_GET);
+            require_once File::build_path(array('view', 'view.php'));
+        }
+        else if($_GET['mdpClient']==$_GET['confirm_mdpClient']) {
             $view = 'updated';
             $pagetitle = 'Liste des joueurs';
             $tab_u = ModelClients::selectAll();     //appel au modèle pour gerer la BD
@@ -110,6 +123,7 @@ class ControllerClients {
             //encodage du mdp
             $_GET['mdpClient'] = Security::hacher($_GET['mdpClient']);
             //fin encodage
+            unset($_GET['confirm_mdpClient']);
             if ($u) $u->update($_GET);
             require_once File::build_path(array('view', 'view.php'));
         }

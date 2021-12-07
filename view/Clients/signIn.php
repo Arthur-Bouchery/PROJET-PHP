@@ -5,7 +5,7 @@
         <legend>Connexion :</legend>
         <p>
             <label for="login_id">Email</label> :
-            <input type="email" placeholder="xxxx.xxxx@xxx.xx" name="emailClient" id="login_id" required/>
+            <input type="text" placeholder="xxxx.xxxx@xxx.xx" name="mailClient" id="login_id" required/>
 
             <label for="login_id">Mot De Passe</label> :
             <input type="password" placeholder="password" name="mdpClient" id="mdpClient_id" required/>
