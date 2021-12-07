@@ -15,7 +15,7 @@
                 </a>
             </div>
             <div id="boxCenter">
-                <a href="index.php?action=readAll&controller=repliques">Repliques</a>
+                <a href="index.php?action=readAll&controller=repliques">Répliques</a>
                 <a href="index.php?&controller=clients&action=home"> <?php if (isset($_SESSION['prenomClient'])) {
                         echo $_SESSION['prenomClient'];
                     } else {
