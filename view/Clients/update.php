@@ -26,19 +26,17 @@
             <label for="nom_id">telephone</label> :
             <input type="text" <?php if (isset($u)){ echo 'value="'.htmlspecialchars($u->get('telClient'));} ?>" name="telClient" id="nom_id" required/>
         </p>
-        <?php if($_GET["action"] == "create") { ?>
         <p>
             <label for="nom_id">mot de passe</label> :
-            <input type="password" <?php if (isset($u)){ echo 'value="'.htmlspecialchars($u->get('mdpClient'));} ?>" name="mdpClient" id="nom_id" required/>
+            <input type="password" name="mdpClient" id="nom_id" <?php echo $_GET["action"] == "create" ? "required" : "";?>/>
         </p>
         <p>
             <label for="nom_id">Confirmation mot de passe</label> :
-            <input type="password" <?php if (isset($u)){ echo 'value="'.htmlspecialchars($u->get('mdpClient'));} ?>" name="confirm_mdpClient" id="nom_id" required/>
+            <input type="password" name="confirm_mdpClient" id="nom_id" <?php echo $_GET["action"] == "create" ? "required" : "";?>/>
         </p>
-        <?php } ?>
         <p>
             <label for="admin_id">ADMIN : </label>
-            <input type="checkbox" name="admin" value="1">
+            <input type="checkbox" name="admin" value="1" <?php if ($u->get('admin') !== 0) echo "checked"; ?>>
         </p>
 
         <input type="submit" value="Envoyer" />
