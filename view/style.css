@@ -1,11 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
+:root {
+    --headerfooter: rgba(186, 211, 232, 0.53);
+}
 
 html, body {
     line-height: 1.5;
     font-family: 'Roboto', sans-serif;
     display: flex;
-    min-height: 98vh;
+    min-height: 100vh;
     flex-direction: column;
+    margin: 0px;
+    padding: 0px;
 }
 
 main {
@@ -17,40 +24,70 @@ main {
     flex: 1;
 }
 
-header {
+header, footer {
     display: flex;
-    justify-content: space-between;
-    text-align: center;
-    border-radius: 3px;
-    text-decoration: none;
+    background-color: #111;
+    font-family: 'Varela Round', sans-serif;
+    flex-direction: column;
+}
+
+#headerTop {
+    display: flex;
+    flex: 1;
+    align-items: center;
     padding: 10px;
-    background: linear-gradient(0deg, rgb(255, 255, 255) 10%, rgba(186, 211, 232, 0.53) 100%);
+}
+
+#headerTop > div {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+#headerBottom {
+    padding: 5px;
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 30px;
+    padding: 10px;
+    background-color: #342f2f;
+}
+
+header a, footer {
+    color: azure;
+    text-decoration: none;
+    text-transform: uppercase;
 }
 
 #boxCenter, #boxLeft, #boxRight {
     display: flex;
-    flex: 1;
-}
-
-#boxCenter {
-    justify-content: space-around;
 }
 
 #boxRight {
     justify-content: flex-end;
+    flex: 1;
 }
 
-footer {
-    border-radius: 3px;
-    display: flex;
-    justify-content: center;
-    background: linear-gradient(0deg, rgba(186, 211, 232, 0.53) 10%, rgb(255, 255, 255) 100%);
-}
-
-a:visited {
-    text-decoration: none;
+#boxCenter {
+    width: 100%;
+    gap: 30px;
+    margin-left: 30px;
 }
 
 a:hover {
-    color: blue;
+    color: #c42c2c;
+}
+
+#boxLeft img {
+    width: 80px;
+    margin: 3px;
+}
+
+footer {
+    display: flex;
+    background-color: #111;
+    font-family: 'Varela Round', sans-serif;
+    text-align: center;
 }
