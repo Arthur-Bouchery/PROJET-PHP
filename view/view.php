@@ -7,14 +7,18 @@
 </head>
 <body>
 <header>
-    <a href="index.php?action=readAll&controller=repliques">Repliques</a>
-    <a href="index.php?&controller=clients&action=home"> <?php if (isset($_SESSION['prenomClient'])) {
-            echo $_SESSION['prenomClient'];
-        } else {
-            echo "Profil";
-        } ?></a>
-    <a href="view/preferences.html">Préférences</a>
-    <a href="index.php?action=readAll&controller=panier">Panier</a>
+    <div id="boxLeft"></div>
+    <div id="boxCenter">
+        <a href="index.php?action=readAll&controller=repliques">Repliques</a>
+        <a href="index.php?&controller=clients&action=home"> <?php if (isset($_SESSION['prenomClient'])) {
+                echo $_SESSION['prenomClient'];
+            } else {
+                echo "Profil";
+            } ?></a>
+        <a href="view/preferences.html">Préférences</a>
+        <a href="index.php?action=readAll&controller=panier">Panier</a>
+    </div>
+    <a id="boxRight" href="index.php?action=signIn&controller=clients">Connexion</a>
     <?php if (isset($_SESSION['admin']) && $_SESSION['admin'] == 1) { ?>
         <br>Pannel administrateur :
         <a href="index.php?action=readAll&controller=clients">Gestion des clients</a>
@@ -31,7 +35,7 @@
     ?>
 </main>
 <footer>
-    Site de vente de Repliques d'armes à feu (pour petit enfant)
+    Site de vente de répliques d'armes à feu (pour petits enfants)
 </footer>
 </body>
 </html>

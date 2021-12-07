@@ -9,6 +9,8 @@ html, body {
 }
 
 header {
+    display: flex;
+    justify-content: space-between;
     text-align: center;
     border-radius: 3px;
     text-decoration: none;
