@@ -1,4 +1,4 @@
-<form method="POST" action="index.php?controller=" . self::$object . "&action=" . $_GET['action'] ."d") . '"><fieldset>
+<form method="POST" action=<?php echo "index.php?controller=" . self::$object . "&action=" . $_GET['action'] ."d" . '>' ?><fieldset>
     <legend><?php echo($_GET["action"] == "create" ? "Créer une réplique" : "Modifier une réplique"); ?></legend>
     <?php
     if ($_GET['action'] !== 'create') { ?>

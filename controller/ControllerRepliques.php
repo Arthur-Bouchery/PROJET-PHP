@@ -93,7 +93,7 @@ class ControllerRepliques
         );
         ModelRepliques::update($data);
 
-        $view = 'created';
+        $view = 'updated';
         $pagetitle = 'Réplique mise à jour';
         $tab = ModelRepliques::selectAll();
         require File::build_path(array("view", "view.php"));
