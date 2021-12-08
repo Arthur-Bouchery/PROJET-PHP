@@ -9,7 +9,7 @@ require_once File::build_path(array("controller", "ControllerPanier.php"));
 
 // Implémentation des préférences du cookie
 if (!isset($_COOKIE['pagePref'])) {
-    $controller_default = 'clients';
+    $controller_default = 'repliques';
 } else {
     $controller_default = $_COOKIE['pagePref'];
 }

@@ -2,7 +2,9 @@
 
 class ControllerCommandes
 {
+    public static function creerCommande() {
 
+    }
 }
 
 ?>
