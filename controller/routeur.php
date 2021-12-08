@@ -24,7 +24,7 @@ if (isset($_GET['controller'])) {
 // Vérification que le controller existe
 $controller_class = 'Controller' . ucfirst($controller);
 if (!class_exists($controller_class)) {
-    ControllerRepliques::error();
+    ControllerRepliques::errorPageIntrouvable();
     exit();
 }
 

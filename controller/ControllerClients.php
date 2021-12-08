@@ -76,6 +76,11 @@ class ControllerClients
 
     public static function read()
     {
+        if(!isset($_GET['codeClient'])) {
+            self::errorPageIntrouvable();
+            exit();
+        }
+
         $u = ModelClients::select($_GET['codeClient']);
         if ($u == false) {
             self::errorClientInexistant();
@@ -89,6 +94,11 @@ class ControllerClients
 
     public static function delete()
     {
+        if(!isset($_GET['codeClient'])) {
+            self::errorPageIntrouvable();
+            exit();
+        }
+
         if (ModelClients::select($_GET['codeClient']) == false) {
             self::errorClientInexistant();
             exit();
@@ -110,11 +120,17 @@ class ControllerClients
 
     public static function update()
     {
+        if(!isset($_GET['codeClient'])) {
+            self::errorPageIntrouvable();
+            exit();
+        }
+
         $u = ModelClients::select($_GET['codeClient']);
         if ($u == false) {
             self::errorClientInexistant();
             exit();
         }
+
         $view = "update";
         $pagetitle = 'Mise à jour des informations de profil';
         require_once File::build_path(array('view', 'view.php'));
@@ -170,10 +186,10 @@ class ControllerClients
         }
     }
 
-    public static function error()
+    public static function errorPageIntrouvable()
     {
-        $view = 'error';
-        $pagetitle = 'error';
+        $view = 'errorPageIntrouvable';
+        $pagetitle = 'Page introuvable';
         require_once File::build_path(array('view', 'view.php'));
     }
 
