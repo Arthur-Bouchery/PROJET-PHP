@@ -15,6 +15,11 @@ class ControllerRepliques
 
     public static function read()
     {
+        if(!isset($_GET['idReplique'])) {
+            self::errorPageIntrouvable();
+            exit();
+        }
+
         $r = ModelRepliques::select($_GET['idReplique']);
         if ($r == false) {
             self::errorRepliqueInexistante();
@@ -98,7 +103,7 @@ class ControllerRepliques
         require File::build_path(array("view", "view.php"));
     }
 
-    public static function error()
+    public static function errorPageIntrouvable()
     {
         $view = 'error';
         $pagetitle = 'Erreur';
