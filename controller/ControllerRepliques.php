@@ -38,7 +38,6 @@ class ControllerRepliques
     public static function created()
     {
         $data = array(
-            'idReplique' => $_POST['idReplique'],
             'nomReplique' => $_POST['nomReplique'],
             'nomCategorie' => $_POST['nomCategorie'],
             'stockRepliques' => $_POST['stockRepliques']
