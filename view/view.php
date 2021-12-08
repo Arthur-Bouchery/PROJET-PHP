@@ -22,7 +22,6 @@
                     } else {
                         echo "Profil";
                     } ?></a>
-                <a href="view/preferences.html">Préférences</a>
                 <a href="index.php?action=readAll&controller=panier">Panier</a>
             </div>
         </div>
@@ -30,14 +29,16 @@
             <?php
             if (isset($_SESSION['admin']) && $_SESSION['admin'] == 1)
                 echo '<a href="index.php?action=signOut&controller=clients">Se déconnecter</a>';
-            else
+            else {
+                echo '<a href="index.php?action=signedUp&controller=clients">Inscription</a>';
                 echo '<a href="index.php?action=signIn&controller=clients">Connexion</a>';
+            }
 
             ?>
         </div>
     </div>
     <?php if (isset($_SESSION['admin']) && $_SESSION['admin'] == 1) {
-    echo '<div id="headerBottom">
+        echo '<div id="headerBottom">
         <a href="index.php?action=readAll&controller=clients">Gestion des clients</a>
         <a href="index.php?action=create&controller=clients">Créer un client</a>
         <a href="index.php?action=create&controller=repliques">Créer une réplique</a>

@@ -68,6 +68,7 @@ header a {
 #boxRight {
     justify-content: flex-end;
     flex: 1;
+    gap: 30px;
     margin-right: 10px;
 }
 
