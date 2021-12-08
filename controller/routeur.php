@@ -28,6 +28,8 @@ if (!class_exists($controller_class)) {
     exit();
 }
 
+
+
 // Récupération de la variable action
 if (!isset($_GET['action'])) { // Actions par défaut si rien n'a été spécifié
     if ($controller == 'client') $action = 'home'; // TODO s à clients

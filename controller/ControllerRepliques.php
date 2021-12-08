@@ -25,7 +25,6 @@ class ControllerRepliques
             self::errorRepliqueInexistante();
             exit();
         }
-
         $view = 'detail';
         $pagetitle = 'Détails de la réplique';
         require File::build_path(array("view", "view.php"));

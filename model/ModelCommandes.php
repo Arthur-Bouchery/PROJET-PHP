@@ -36,6 +36,20 @@ class ModelCommandes extends Model
         $this->$nom_attribut = $valeur;
     }
 
+    public function enregistrer(){
+        foreach ($this->idReplique_qte as $item => $value) {
+            $data['codeCommande'] = $this->codeCommande;
+            var_dump($item);
+            var_dump($value);
+            $data['idReplique'] = $item;
+            $data['quantite'] = $value;
+            $data['dateCommande'] = $this->dateCommande;
+            $data['codeClient'] = $this->codeClient;
+            ModelCommandes::save($data);
+        }
+    }
+
+
 //    public function afficher(){
 //    	echo "numéro de commande : ".$this->codeCommande;
 //    	echo "date de la Commande ".$this->marque;

@@ -2,7 +2,7 @@
 foreach ($tab_panier as $k => $v) {
     ?>
     <p> Replique d'ID <?php echo htmlspecialchars($k); ?> de quantité <?php echo htmlspecialchars($v); ?> </p>
-    <a href="?controller=replique&action=read&idReplique=<?php echo $k ?>">Detail</a>
+    <a href="?controller=repliques&action=read&idReplique=<?php echo $k ?>">Detail</a>
     <a href="?controller=panier&action=set&idReplique=<?php echo $k; ?>&qte=0">Supprimer</a>
     <form method="GET" action="index.php">
         <input type="hidden" name="action" value="set" />
@@ -16,4 +16,5 @@ foreach ($tab_panier as $k => $v) {
 }
 ?>
     <p>
+
         <a href="?controller=commandes&action=commander">Passer la commande</a>
