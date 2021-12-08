@@ -41,6 +41,7 @@
         <a href="index.php?action=readAll&controller=clients">Gestion des clients</a>
         <a href="index.php?action=create&controller=clients">Créer un client</a>
         <a href="index.php?action=create&controller=repliques">Créer une réplique</a>
+        <a href="index.php?action=readAll&controller=commandes">Gestion des commandes</a>
     </div>';
     } ?>
 

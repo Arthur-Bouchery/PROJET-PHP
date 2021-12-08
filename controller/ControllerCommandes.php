@@ -1,5 +1,7 @@
 <?php
 
+require_once File::build_path(array("model", "ModelCommandes.php"));
+
 class ControllerCommandes
 {
     protected static $object = 'Commandes';

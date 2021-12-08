@@ -6,12 +6,12 @@ require_once File::build_path(array("model","Model.php"));
 class ModelCommandes extends Model
 {
     private $codeCommande;
-    private $idReplique;
     private $dateCommande;
     private $codeClient;
-    private $quantite;
+    private $idReplique_qte; //array(array('id','qte'), ...)
 
-    protected static $object = 'repliques';
+
+    protected static $object = 'commandes';
 
     protected static $primary='codeCommande';
 
@@ -21,10 +21,80 @@ class ModelCommandes extends Model
             // c'est forcement qu'on les a fournis
             // donc on retombe sur le constructeur à 3 arguments
             $this->codeCommande = $cC;
-            $this->idReplique = $iR;
+            $this->idReplique_qte = $iR;
             $this->dateCommande = $dC;
             $this->codeClient = $cCl;
-            $this->quantite = $q;
+        }
+    }
+
+    static public function select($codeCommande){
+        try {
+            $table_name = static::$object;
+            $class_name = 'Model' . ucfirst($table_name);
+            $primary_key = static::$primary;
+
+            $req_prep = Model::getPDO()->prepare("SELECT idReplique, quantite, codeClient FROM $table_name WHERE $primary_key=:nom_tag");
+            $values = array(
+                "nom_tag" => $codeCommande,
+            );
+            $req_prep->execute($values);
+            $tab = $req_prep->fetchAll();
+            return $tab;
+        } catch (PDOException $e) {
+            if (Conf::getDebug())
+                echo $e->getMessage();
+            else {
+                echo '<br>Une erreur est survenue - <a href="">Retour à la page d\'accueil</a>';
+            }
+            die();
+        }
+
+        if (empty($tab))
+            return false;
+        return $tab[0];
+    }
+
+    static public function selectAll()
+    {
+        try {
+            $table_name = static::$object;
+            $class_name = 'Model' . ucfirst($table_name);
+
+            $pdo = Model::getPDO();
+            $rep = $pdo->query("SELECT DISTINCT codeCommande, dateCommande FROM $table_name");
+            return $rep->fetchAll();
+        } catch (PDOException $e) {
+            if (Conf::getDebug())
+                echo $e->getMessage();
+            else {
+                echo '<br>Une erreur est survenue - <a href="">Retour à la page d\'accueil</a>';
+            }
+            die();
+        }
+        return $tab;
+    }
+
+    public static function getLastCode(){
+        $table_name = static::$object;
+        $class_name = 'Model'.ucfirst($table_name);
+        $sql="SELECT max(codeCommande) FROM commandes";
+        $req_prep = Model::getPDO()->prepare($sql);
+
+        //on execute la requete
+        try{
+            $req_prep->execute();
+            $tab = $req_prep->fetchAll();
+            if (sizeof($tab)>=1){ //si on a un ou plusieurs résultat
+                return $tab[0][0];
+            }else return -1; //si aucunz commande
+        }catch (PDOException $e) {
+            if (Conf::getDebug()) {
+                echo $sql;
+                echo $e->getMessage(); // affiche un message d'erreur
+            } else {
+                echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
+            }
+            die();
         }
     }
 
