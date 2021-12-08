@@ -1,36 +1,50 @@
 <?php
 
-require_once File::build_path(array("model","ModelClients.php"));
-class ControllerClients {
+require_once File::build_path(array("model", "ModelClients.php"));
 
-    protected static $object='Clients';
+class ControllerClients
+{
 
-    public static function home(){
+    protected static $object = 'Clients';
+
+    public static function home()
+    {
         //renvoyer sur l'affichage du compte si connecté
         //proposer la connexion et l'inscription si non
         $view = 'home';
         $pagetitle = 'Connexion';
-        require_once File::build_path(array('view','view.php'));
-    }
-
-    public static function signIn(){
-        $view="signIn";
-        $pagetitle='Connexion';
         require_once File::build_path(array('view', 'view.php'));
     }
 
-    public static function signedIn(){
+    public static function signIn()
+    {
+        $view = "signIn";
+        $pagetitle = 'Connexion';
+        $wrongInformations = false;
+        require_once File::build_path(array('view', 'view.php'));
+    }
+
+    public static function signInError()
+    {
+        $view = "signIn";
+        $pagetitle = 'Connexion';
+        $wrongInformations = true;
+        require_once File::build_path(array('view', 'view.php'));
+    }
+
+    public static function signedIn()
+    {
         $emailClient = $_GET['mailClient'];
         $mdp_hash = Security::hacher($_GET['mdpClient']);
-        $validUser = ModelClients::checkPassword($emailClient,$mdp_hash);
+        $validUser = ModelClients::checkPassword($emailClient, $mdp_hash);
 
-        if(!$validUser){
-            self::signIn();
-        }else {
-            $view="home";
-            $pagetitle='Profil Utilisateur';
+        if (!$validUser) {
+            self::signInError();
+        } else {
+            $view = "home";
+            $pagetitle = 'Profil Utilisateur';
             //ouvrir la session du client
-            $_SESSION['codeClient']=ModelClients::getCodeClientByEmailAndPassword($emailClient,$mdp_hash);
+            $_SESSION['codeClient'] = ModelClients::getCodeClientByEmailAndPassword($emailClient, $mdp_hash);
             $ad = ModelClients::select($_SESSION['codeClient']);
             $_SESSION['prenomClient'] = $ad->get('prenomClient');
             $admin = $ad->get('admin');
@@ -38,11 +52,12 @@ class ControllerClients {
                 $_SESSION['admin'] = true;
             }
             $u = ModelClients::select($_SESSION['codeClient']);
-            require_once File::build_path(array('view','view.php'));
+            require_once File::build_path(array('view', 'view.php'));
         }
     }
 
-    public static function signOut(){
+    public static function signOut()
+    {
         if (isset($_SESSION['codeClient'])) {
             unset($_SESSION['codeClient']);
             unset($_SESSION['admin']);
@@ -50,55 +65,63 @@ class ControllerClients {
         }
         return static::home();
     }
-    
-    public static function readAll() {
+
+    public static function readAll()
+    {
         $view = 'list';
         $pagetitle = 'Liste des Clients';
         $tab_u = ModelClients::selectAll();     //appel au modèle pour gerer la BD
-        require_once File::build_path(array('view','view.php'));  //"redirige" vers la vue
+        require_once File::build_path(array('view', 'view.php'));  //"redirige" vers la vue
     }
-    public static function read(){
+
+    public static function read()
+    {
 
         $view = 'detail';
         $pagetitle = "Détail du Clients";
         $u = ModelClients::select($_GET['codeClient']);
-        if($u == false or $u == null){
+        if ($u == false or $u == null) {
             throw new Exception("Utilisateur introuvable", 1);
         }
-        require File::build_path(array('view','view.php'));  //"redirige" vers la vue
+        require File::build_path(array('view', 'view.php'));  //"redirige" vers la vue
     }
 
-    public static function error() {
+    public static function error()
+    {
         $view = 'error';
         $pagetitle = 'error';
         require_once File::build_path(array('view', 'view.php'));
     }
 
-    public static function delete() {
-        $view="deleted";
-        $pagetitle='SUPRESSION';
+    public static function delete()
+    {
+        $view = "deleted";
+        $pagetitle = 'SUPRESSION';
         $login = $_GET['codeClient'];
         ModelClients::delete($login);
         $tab_u = ModelClients::selectAll();
         require_once File::build_path(array('view', 'view.php'));
     }
 
-    public static function create(){
+    public static function create()
+    {
         $view = 'update';
         $pagetitle = 'Enregistrez un Client';
-        require File::build_path(array('view','view.php'));  //"redirige" vers la vue
+        require File::build_path(array('view', 'view.php'));  //"redirige" vers la vue
     }
 
-    public static function update() {
+    public static function update()
+    {
 
-        $view="update";
-        $pagetitle='Mise à jour des informations de profil';
+        $view = "update";
+        $pagetitle = 'Mise à jour des informations de profil';
         $login = $_GET['codeClient'];
         $u = ModelClients::select($login);
         require_once File::build_path(array('view', 'view.php'));
     }
 
-    public static function updated() {
+    public static function updated()
+    {
         unset($_GET['action']);
         unset($_GET['controller']);
         if ($_GET['mdpClient'] == "") {
@@ -113,8 +136,7 @@ class ControllerClients {
             unset($_GET['confirm_mdpClient']);
             if ($u) $u->update($_GET);
             require_once File::build_path(array('view', 'view.php'));
-        }
-        else if($_GET['mdpClient']==$_GET['confirm_mdpClient']) {
+        } else if ($_GET['mdpClient'] == $_GET['confirm_mdpClient']) {
             $view = 'updated';
             $pagetitle = 'Liste des joueurs';
             $tab_u = ModelClients::selectAll();     //appel au modèle pour gerer la BD
@@ -129,8 +151,9 @@ class ControllerClients {
         }
     }
 
-    public static function created(){
-        if($_GET['mdpClient']==$_GET['confirm_mdpClient']) {
+    public static function created()
+    {
+        if ($_GET['mdpClient'] == $_GET['confirm_mdpClient']) {
             unset($_GET['confirm_mdpClient']);
             $view = 'created';
             $pagetitle = 'Liste des utilisateurs';
