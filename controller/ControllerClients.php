@@ -34,8 +34,8 @@ class ControllerClients
 
     public static function signedIn()
     {
-        $emailClient = $_GET['mailClient'];
-        $mdp_hash = Security::hacher($_GET['mdpClient']);
+        $emailClient = $_POST['mailClient'];
+        $mdp_hash = Security::hacher($_POST['mdpClient']);
         $validUser = ModelClients::checkPassword($emailClient, $mdp_hash);
 
         if (!$validUser) {
