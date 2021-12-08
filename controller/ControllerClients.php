@@ -52,7 +52,7 @@ class ControllerClients
                 $_SESSION['admin'] = true;
             }
             $u = ModelClients::select($_SESSION['codeClient']);
-            require_once File::build_path(array('view', 'view.php'));
+            require_once File::build_path(array('view', 'view.php')); // TODO ça serait pas mieux de redigirer vers la page principale ?
         }
     }
 
@@ -76,15 +76,18 @@ class ControllerClients
 
     public static function read()
     {
-
         $view = 'detail';
-        $pagetitle = "Détail du Clients";
+        $pagetitle = "Détail du client";
         $u = ModelClients::select($_GET['codeClient']);
-        if ($u == false or $u == null) {
-            throw new Exception("Utilisateur introuvable", 1);
+        if ($u == false) {
+            self::errorClientInexistant();
+            exit();
         }
         require File::build_path(array('view', 'view.php'));  //"redirige" vers la vue
     }
+
+
+
 
     public static function error()
     {
@@ -168,6 +171,13 @@ class ControllerClients
             //$u = ModelClients::select($_GET['codeClient']); je m'en carre le fion de cette ligne
             require_once File::build_path(array('view', 'view.php'));
         }
+    }
+
+    public static function errorClientInexistant()
+    {
+        $view = 'errorClient';
+        $pagetitle = 'Client inexistant';
+        require File::build_path(array("view", "view.php"));
     }
 }
 
