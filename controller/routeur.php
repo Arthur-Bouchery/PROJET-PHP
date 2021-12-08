@@ -6,10 +6,11 @@ $_SESSION['panier'] = array();
 require_once File::build_path(array("controller", "ControllerRepliques.php"));
 require_once File::build_path(array("controller", "ControllerClients.php"));
 require_once File::build_path(array("controller", "ControllerPanier.php"));
+require_once File::build_path(array("controller", "ControllerCommandes.php"));
 
 // Implémentation des préférences du cookie
 if (!isset($_COOKIE['pagePref'])) {
-    $controller_default = 'clients';
+    $controller_default = 'repliques';
 } else {
     $controller_default = $_COOKIE['pagePref'];
 }
