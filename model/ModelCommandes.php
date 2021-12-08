@@ -33,13 +33,28 @@ class ModelCommandes extends Model
             $class_name = 'Model' . ucfirst($table_name);
             $primary_key = static::$primary;
 
-            $req_prep = Model::getPDO()->prepare("SELECT idReplique, quantite, codeClient FROM $table_name WHERE $primary_key=:nom_tag");
+            $req_prep = Model::getPDO()->prepare("SELECT idReplique, quantite, dateCommande, codeClient FROM $table_name WHERE $primary_key=:nom_tag");
             $values = array(
                 "nom_tag" => $codeCommande,
             );
             $req_prep->execute($values);
             $tab = $req_prep->fetchAll();
-            return $tab;
+
+            $c = new ModelCommandes();
+            $panier= array();
+            $i = 0;
+            foreach ($tab as $item){
+                $temp['idReplique'] = $item['idReplique'];
+                $temp['qte'] = $item['quantite'];
+                $panier[$i] = $temp;
+                $i ++;
+            }
+            $c->set('idReplique_qte', $panier);
+            $c->set('codeCommande', $codeCommande);
+            $c->set('dateCommande', $tab[0]['dateCommande']);
+            $c->set('codeClient', $tab[0]['codeClient']);
+
+            return $c;
         } catch (PDOException $e) {
             if (Conf::getDebug())
                 echo $e->getMessage();
