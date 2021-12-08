@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title><?php echo $pagetitle; ?></title>
     <link rel="stylesheet" type="text/css" href="view/style.css">
+    <link rel="icon" href="view/images/favicon.png">
 </head>
 <body>
 <header>

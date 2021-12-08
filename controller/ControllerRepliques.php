@@ -115,8 +115,8 @@ class ControllerRepliques
 
     public static function errorPageIntrouvable()
     {
-        $view = 'error';
-        $pagetitle = 'Erreur';
+        $view = 'errorPageIntrouvable';
+        $pagetitle = 'Page introuvable';
         require File::build_path(array("view", "view.php"));
     }
 

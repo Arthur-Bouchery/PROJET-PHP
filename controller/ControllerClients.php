@@ -186,10 +186,10 @@ class ControllerClients
         }
     }
 
-    public static function error()
+    public static function errorPageIntrouvable()
     {
-        $view = 'error';
-        $pagetitle = 'error';
+        $view = 'errorPageIntrouvable';
+        $pagetitle = 'Page introuvable';
         require_once File::build_path(array('view', 'view.php'));
     }
 
