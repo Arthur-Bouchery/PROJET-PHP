@@ -76,50 +76,47 @@ class ControllerClients
 
     public static function read()
     {
-        $view = 'detail';
-        $pagetitle = "Détail du client";
         $u = ModelClients::select($_GET['codeClient']);
         if ($u == false) {
             self::errorClientInexistant();
             exit();
         }
+
+        $view = 'detail';
+        $pagetitle = "Détail du client";
         require File::build_path(array('view', 'view.php'));  //"redirige" vers la vue
-    }
-
-
-
-
-    public static function error()
-    {
-        $view = 'error';
-        $pagetitle = 'error';
-        require_once File::build_path(array('view', 'view.php'));
     }
 
     public static function delete()
     {
-        $view = "deleted";
-        $pagetitle = 'SUPRESSION';
-        $login = $_GET['codeClient'];
-        ModelClients::delete($login);
+        if (ModelClients::select($_GET['codeClient']) == false) {
+            self::errorClientInexistant();
+            exit();
+        }
+
+        ModelClients::delete($_GET['codeClient']);
         $tab_u = ModelClients::selectAll();
+        $view = "deleted";
+        $pagetitle = 'Suppression d\'un client';
         require_once File::build_path(array('view', 'view.php'));
     }
 
     public static function create()
     {
         $view = 'update';
-        $pagetitle = 'Enregistrez un Client';
-        require File::build_path(array('view', 'view.php'));  //"redirige" vers la vue
+        $pagetitle = 'Inscription';
+        require File::build_path(array('view', 'view.php'));
     }
 
     public static function update()
     {
-
+        $u = ModelClients::select($_GET['codeClient']);
+        if ($u == false) {
+            self::errorClientInexistant();
+            exit();
+        }
         $view = "update";
         $pagetitle = 'Mise à jour des informations de profil';
-        $login = $_GET['codeClient'];
-        $u = ModelClients::select($login);
         require_once File::build_path(array('view', 'view.php'));
     }
 
@@ -171,6 +168,13 @@ class ControllerClients
             //$u = ModelClients::select($_GET['codeClient']); je m'en carre le fion de cette ligne
             require_once File::build_path(array('view', 'view.php'));
         }
+    }
+
+    public static function error()
+    {
+        $view = 'error';
+        $pagetitle = 'error';
+        require_once File::build_path(array('view', 'view.php'));
     }
 
     public static function errorClientInexistant()
