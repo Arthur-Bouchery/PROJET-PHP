@@ -61,6 +61,11 @@ class ControllerRepliques
 
     public static function delete()
     {
+        if(!isset($_GET['idReplique'])) {
+            self::errorPageIntrouvable();
+            exit();
+        }
+
         if (ModelRepliques::select($_GET['idReplique']) == false) {
             self::errorRepliqueInexistante();
             exit();
@@ -75,6 +80,11 @@ class ControllerRepliques
 
     public static function update()
     {
+        if(!isset($_GET['idReplique'])) {
+            self::errorPageIntrouvable();
+            exit();
+        }
+
         $r = ModelRepliques::select($_GET['idReplique']);
         if ($r == false) {
             self::errorRepliqueInexistante();
