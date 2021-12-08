@@ -32,6 +32,11 @@ class ControllerRepliques
 
     public static function create()
     {
+        if (!isset($_SESSION['codeClient']) || !$_SESSION['admin']) {
+            self::errorConnecte();
+            exit();
+        }
+
         $r = new ModelRepliques('', '', '', '');
         $methodename = 'created';
         $view = 'update';
@@ -41,6 +46,11 @@ class ControllerRepliques
 
     public static function created()
     {
+        if (!isset($_SESSION['codeClient']) || !$_SESSION['admin']) {
+            self::errorConnecte();
+            exit();
+        }
+
         $data = array(
             'nomReplique' => $_POST['nomReplique'],
             'nomCategorie' => $_POST['nomCategorie'],
@@ -60,6 +70,11 @@ class ControllerRepliques
 
     public static function delete()
     {
+        if (!isset($_SESSION['codeClient']) || !$_SESSION['admin']) {
+            self::errorConnecte();
+            exit();
+        }
+
         if(!isset($_GET['idReplique'])) {
             self::errorPageIntrouvable();
             exit();
@@ -79,6 +94,11 @@ class ControllerRepliques
 
     public static function update()
     {
+        if (!isset($_SESSION['codeClient']) || !$_SESSION['admin']) {
+            self::errorConnecte();
+            exit();
+        }
+
         if(!isset($_GET['idReplique'])) {
             self::errorPageIntrouvable();
             exit();
@@ -98,6 +118,11 @@ class ControllerRepliques
 
     public static function updated()
     {
+        if (!isset($_SESSION['codeClient']) || !$_SESSION['admin']) {
+            self::errorConnecte();
+            exit();
+        }
+
         $data = array(
             'idReplique' => $_POST['idReplique'],
             'nomReplique' => $_POST['nomReplique'],
@@ -130,6 +155,14 @@ class ControllerRepliques
     {
         $view = 'errorExisteDeja';
         $pagetitle = 'La voiture existe déjà';
+        require File::build_path(array("view", "view.php"));
+    }
+
+    public
+    static function errorConnecte()
+    {
+        $view = 'errorConnecte';
+        $pagetitle = 'Accès impossible';
         require File::build_path(array("view", "view.php"));
     }
 }

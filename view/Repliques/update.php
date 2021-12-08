@@ -1,15 +1,15 @@
-<form method="POST" action=<?php echo "index.php?controller=" . self::$object . "&action=" . $_GET['action'] ."d" . '>' ?><fieldset>
+<form method="POST"
+      action=<?php echo "index.php?controller=" . self::$object . "&action=" . $_GET['action'] . "d" . '>' ?>
     <legend><?php echo($_GET["action"] == "create" ? "Créer une réplique" : "Modifier une réplique"); ?></legend>
     <?php
     if ($_GET['action'] !== 'create') { ?>
         <p>
             <label for="id_id">Identifiant</label> :
             <input type="text" value="<?php echo htmlspecialchars($r->get('idReplique')); ?>" name="idReplique"
-                   id="id_id "' . ($_GET["action"] != "create" ? "readonly" : "required") . '/>
+                   id="id_id "' . <?php ($_GET["action"] != "create" ? "readonly" : "required") ?> . '/>
         </p>
     <?php }
     ?>
-
     <p>
         <label for="nom_id">Nom</label> :
         <input type="text" value="<?php echo htmlspecialchars($r->get('nomReplique')); ?>" name="nomReplique"
@@ -29,8 +29,8 @@
         <input type="submit"
                value="<?php echo($_GET["action"] == "create" ? "Créer la réplique" : "Mettre à jour"); ?>"/>
     </p>
-</fieldset>
 </form>
+
 
 
 

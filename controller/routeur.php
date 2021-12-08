@@ -41,7 +41,7 @@ else
 // Vérification que l'action existe dans la classe
 $methodes = get_class_methods($controller_class);
 if (!in_array($action, $methodes)) {
-    $controller_class::error();
+    $controller_class::errorPageIntrouvable();
     exit();
 }
 
