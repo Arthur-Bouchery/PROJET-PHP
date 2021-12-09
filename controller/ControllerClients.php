@@ -33,12 +33,12 @@ class ControllerClients
     }
 
     public static function signedUp(){
-        $emailClient = $_POST['mailClient'];
+        $mailClient = $_POST['mailClient'];
         //encodage du mdp
         $mdp_hash = Security::hacher($_POST['mdpClient']);
         //fin encodage
-        $validUser = ModelClients::checkEmail($emailClient);
-        if (!$validUser){
+        $validMail = ModelClients::checkEmail($mailClient);
+        if (!$validMail){
             self::signUpError(' L\'eMail spécifié est déjà affecté à un compte airsoft :/ ');
         }else if ($_POST['mdpClient'] != $_POST['confirm_mdpClient']) {
             self::signUpError(' Les mots de passe ne correspondent pas ! ');

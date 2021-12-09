@@ -30,7 +30,7 @@ class ModelClients extends Model{
         $table_name = static::$object;
         $class_name = 'Model'.ucfirst($table_name);
 
-        $sql="SELECT DISTINCT codeClient FROM clients WHERE codeClient=$codeClient";
+        $sql="SELECT DISTINCT codeClient FROM clients WHERE codeClient='".$codeClient."'";
         $req_prep = Model::getPDO()->prepare($sql);
         try{
             $req_prep->execute();
@@ -132,21 +132,23 @@ class ModelClients extends Model{
         }
     }
     //return false si aucun compte ne possède cet email
-    public static function checkEmail($emailClient){
+    public static function checkEmail($mailClient){
         $table_name = static::$object;
         $class_name = 'Model'.ucfirst($table_name);
 
-        $sql="SELECT DISTINCT codeClient FROM Clients WHERE mailClient=$emailClient";
+        $sql="SELECT DISTINCT codeClient FROM clients WHERE mailClient=:mailClient";
+        $values = array(
+            'mailClient' => $mailClient,
+        );
         $req_prep = Model::getPDO()->prepare($sql);
 
         //on execute la requete
         try{
-            $req_prep->execute();
-            $req_prep->setFetchMode(PDO::FETCH_CLASS, $class_name);
+            $req_prep->execute($values);
             $tab = $req_prep->fetchAll();
             if (sizeof($tab)>=1){ //si on a un ou plusieurs résultat
-                return true;
-            }else return false; //si aucun compte avec cet email
+                return false;
+            }else return true; //si aucun compte avec cet email
         }catch (PDOException $e) {
             if (Conf::getDebug()) {
                 echo $sql;
@@ -186,13 +188,17 @@ class ModelClients extends Model{
     }
 
     public static function getCodeClientByEmailAndPassword($emailClient, $mdp_hash){
-        $sql="SELECT DISTINCT codeClient FROM clients WHERE mailClient='$emailClient' AND mdpClient='$mdp_hash'";
+        $sql="SELECT DISTINCT codeClient FROM clients WHERE mailClient=:mailClient AND mdpClient=:mdp";
+        $values = array(
+            'mailClient' => $emailClient,
+            'mdp'=> $mdp_hash,
+        );
         $req_prep = Model::getPDO()->prepare($sql);
 
 
         //on execute la requete
         try{
-            $req_prep->execute();
+            $req_prep->execute($values);
             $tab = $req_prep->fetchAll();
             if (sizeof($tab)==1) { //si on a un résultat, la connexion peut se poursuivre
                 return $tab[0]['codeClient'];
