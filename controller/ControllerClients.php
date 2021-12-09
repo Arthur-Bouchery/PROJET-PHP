@@ -24,7 +24,7 @@ class ControllerClients
     }
 
     public static function signUpError($message){
-        $_GET['action']=create;
+        $_GET['action']='signUp';
         $view = "signUp";
         $pagetitle = 'Inscription';
         $wrongInformations = true;
@@ -34,7 +34,9 @@ class ControllerClients
 
     public static function signedUp(){
         $emailClient = $_POST['mailClient'];
+        //encodage du mdp
         $mdp_hash = Security::hacher($_POST['mdpClient']);
+        //fin encodage
         $validUser = ModelClients::checkEmail($emailClient);
         if (!$validUser){
             self::signUpError(' L\'eMail spécifié est déjà affecté à un compte airsoft :/ ');
@@ -44,20 +46,23 @@ class ControllerClients
             //Génération du nonce
 //            $nonce = Security::generateRandomHex();
             //Fin de génération du nonce
-            unset($_GET['confirm_mdpClient']);
-            //encodage du mdp
-            $_GET['mdpClient'] = Security::hacher($_POST['mdpClient']);
-            //fin encodage
-            unset($_GET['confirm_mdpClient']);
-            unset($_GET['action']);
-            unset($_GET['controller']);
-            $_GET['admin']=0;
-            ModelClients::save($_GET);
+
+            //préparation $data
+            $data = array(
+                'prenomClient' => $_POST['prenomClient'],
+                'nomClient' => $_POST['nomClient'],
+                'mailClient' => $_POST['mailClient'],
+                'telClient' => $_POST['telClient'],
+                'mdpClient' => $mdp_hash,
+                'admin' => 0,
+            ) ;
+
+            ModelClients::save($data);
             //Rédaction et envoi du mail
 //            $mail = "<a href='webinfo.iutmontp.univ-montp2.fr/~bessej/projet-php/?controller=clients&action=validate&nonce=".ModelClients::getNonceByCC(ModelClients::getCodeClientByEmailAndPassword($_POST['mailClient'],$_POST['mdpClient']))."&codeClient=".ModelClients::getCodeClientByEmailAndPassword($_POST['mailClient'],$_POST['mdpClient'])."'>Cliquez ici pour valider votre eMail</a>";
 //            mail($_POST['mailClient'],"confirmation mail airsoft",$mail);
             //Fin d'envoi
-            $tab_u = ModelClients::selectAll();     //appel au modèle pour gerer la BD
+            //$tab_u = ModelClients::selectAll();     //appel au modèle pour gerer la BD
             //$u = ModelClients::select($_GET['codeClient']); je m'en carre le fion de cette ligne
             Self::signIn();
         }

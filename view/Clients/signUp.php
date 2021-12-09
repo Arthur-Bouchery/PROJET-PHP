@@ -1,6 +1,6 @@
-<form method="POST" action="./index.php">
-    <input type='hidden' name='action' value="signedUp">
-    <input type='hidden' name='controller' value='clients'>
+<form method="POST" action="./index.php?action=signedUp&controller=clients">
+<!--    <input type='hidden' name='action' value="signedUp">-->
+<!--    <input type='hidden' name='controller' value='clients'>-->
     <fieldset>
         <legend>Mon formulaire :</legend>
         <?php
