@@ -233,6 +233,10 @@ class ControllerClients
             exit();
         }
 
+        if(isset($_POST['codeClient'])) {
+            $_GET['codeClient'] = $_POST['codeClient'];
+        }
+
         if ($_SESSION['admin'] && isset($_GET['codeClient'])) {
             $u = ModelClients::select($_GET['codeClient']);
             if ($u == false) {
@@ -258,6 +262,7 @@ class ControllerClients
         }
 
         if ($_POST['mdpClient'] != $_POST['confirm_mdpClient']) {
+            $_GET['action']='update';
             self::update("Les deux mot de passe ne correspondent pas");
             exit();
         }
