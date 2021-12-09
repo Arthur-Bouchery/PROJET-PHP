@@ -152,8 +152,6 @@ class ModelCommandes extends Model
     {
         foreach ($this->idReplique_qte as $item => $value) {
             $data['codeCommande'] = $this->codeCommande;
-            var_dump($item);
-            var_dump($value);
             $data['idReplique'] = $item;
             $data['quantite'] = $value;
             $data['dateCommande'] = $this->dateCommande;

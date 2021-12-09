@@ -37,7 +37,6 @@ class ControllerCommandes
             $c = new ModelCommandes();
             $c->set('dateCommande', date("Y-m-d H:i:s"));
             $old = ModelCommandes::getLastCode();
-            //var_dump($old);
             if($old==null){
                 $c->set('codeCommande', 1);
             }else{$c->set('codeCommande', $old+1);}
