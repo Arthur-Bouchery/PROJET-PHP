@@ -56,7 +56,6 @@ class ModelCommandes extends Model
             $c->set('dateCommande', $tab[0]['dateCommande']);
             $c->set('codeClient', $tab[0]['codeClient']);
 
-            return $c;
         } catch (PDOException $e) {
             if (Conf::getDebug())
                 echo $e->getMessage();
@@ -68,7 +67,7 @@ class ModelCommandes extends Model
 
         if (empty($tab))
             return false;
-        return $tab[0];
+        return $c;
     }
 
     static public function selectAll()
@@ -177,10 +176,14 @@ class ModelCommandes extends Model
         $table_name = static::$object;
         $class_name = 'Model' . ucfirst($table_name);
 
-        $sql = "DELETE FROM commandes WHERE codeCommande=$codeCommande";
+        $sql = "DELETE FROM commandes WHERE codeCommande=:codeCommande";
         $req_prep = Model::getPDO()->prepare($sql);
+
         try {
-            $req_prep->execute();
+            $data = array(
+                'codeCommande' => $codeCommande
+            );
+            $req_prep->execute($data);
         } catch (PDOException $e) {
             if (Conf::getDebug()) {
                 echo $sql;
@@ -192,4 +195,3 @@ class ModelCommandes extends Model
         }
     }
 }
-?>

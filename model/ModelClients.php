@@ -30,10 +30,13 @@ class ModelClients extends Model{
         $table_name = static::$object;
         $class_name = 'Model'.ucfirst($table_name);
 
-        $sql="SELECT DISTINCT codeClient FROM clients WHERE codeClient='".$codeClient."'";
+        $sql="SELECT DISTINCT codeClient FROM clients WHERE codeClient=:codeClient";
+        $data = array(
+            'codeClient' => $codeClient
+        );
         $req_prep = Model::getPDO()->prepare($sql);
         try{
-            $req_prep->execute();
+            $req_prep->execute($data);
             $tab = $req_prep->fetchAll();
             if ($tab[0] !== null){  //Si le client existe alors true
                 return true;
@@ -53,10 +56,13 @@ class ModelClients extends Model{
         $table_name = static::$object;
         $class_name = 'Model'.ucfirst($table_name);
 
-        $sql="UPDATE clients SET nonce=NULL WHERE codeClient=$codeClient";
+        $sql="UPDATE clients SET nonce=NULL WHERE codeClient=:codeClient";
+        $data = array(
+            'codeClient' => $codeClient
+        );
         $req_prep = Model::getPDO()->prepare($sql);
         try{
-            $req_prep->execute();
+            $req_prep->execute($data);
         }catch (PDOException $e) {
             if (Conf::getDebug()) {
                 echo $sql;
@@ -72,10 +78,14 @@ class ModelClients extends Model{
         $table_name = static::$object;
         $class_name = 'Model'.ucfirst($table_name);
 
-        $sql="UPDATE clients SET nonce=$nonce WHERE codeClient=$codeClient";
+        $sql="UPDATE clients SET nonce=:nonce WHERE codeClient=:codeClient";
+        $data = array(
+            'codeClient' => $codeClient,
+            'nonce' => $nonce
+        );
         $req_prep = Model::getPDO()->prepare($sql);
         try{
-            $req_prep->execute();
+            $req_prep->execute($data);
         }catch (PDOException $e) {
             if (Conf::getDebug()) {
                 echo $sql;
@@ -91,10 +101,13 @@ class ModelClients extends Model{
         $table_name = static::$object;
         $class_name = 'Model'.ucfirst($table_name);
 
-        $sql="SELECT DISTINCT nonce FROM clients WHERE codeClient=$codeClient";
+        $sql="SELECT DISTINCT nonce FROM clients WHERE codeClient=:codeClient";
         $req_prep = Model::getPDO()->prepare($sql);
         try{
-            $req_prep->execute();
+            $data = array(
+                'codeClient' => $codeClient
+            );
+            $req_prep->execute($data);
             $tab = $req_prep->fetchAll();
             //Si le client existe alors true
             return $tab[0];
@@ -113,10 +126,13 @@ class ModelClients extends Model{
         $table_name = static::$object;
         $class_name = 'Model'.ucfirst($table_name);
 
-        $sql="SELECT DISTINCT nonce FROM clients WHERE codeClient=$codeClient";
+        $sql="SELECT DISTINCT nonce FROM clients WHERE codeClient=:codeClient";
         $req_prep = Model::getPDO()->prepare($sql);
         try{
-            $req_prep->execute();
+            $data = array(
+                'codeClient' => $codeClient
+            );
+            $req_prep->execute($data);
             $tab = $req_prep->fetchAll();
             if ($tab[0] == null){  //Si le nonce est null alors on peut se co
                 return true;
@@ -228,6 +244,3 @@ class ModelClients extends Model{
 
 
 }
-?>
-
-            
