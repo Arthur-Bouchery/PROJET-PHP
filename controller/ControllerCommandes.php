@@ -52,7 +52,10 @@ class ControllerCommandes
     public static function historique() {
         $view = 'list';
         $pagetitle = 'Liste des Commandes';
-        $tab_commande = ModelCommandes::selectByCodeClient();     //appel au modèle pour gerer la BD
+        if (isset($_SESSION['codeClient'])) {
+            $tab_commande = ModelCommandes::selectByCodeClient();
+        }
+        //appel au modèle pour gerer la BD
         require_once File::build_path(array('view', 'view.php'));  //"redirige" vers la vue
     }
 
