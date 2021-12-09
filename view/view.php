@@ -17,12 +17,13 @@
             </div>
             <div id="boxCenter">
                 <a href="index.php?action=readAll&controller=repliques">Répliques</a>
-                <a href="index.php?&controller=clients&action=home"> <?php if (isset($_SESSION['prenomClient'])) {
+                <a href="index.php?action=readAll&controller=panier">Panier</a>
+                <a href="index.php?&controller=clients&action=home">
+                    <?php if (isset($_SESSION['prenomClient'])) {
                         echo $_SESSION['prenomClient'];
                     } else {
                         echo "Profil";
                     } ?></a>
-                <a href="index.php?action=readAll&controller=panier">Panier</a>
             </div>
         </div>
         <div id="boxRight">
