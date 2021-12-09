@@ -16,17 +16,15 @@ class ControllerClients
         require_once File::build_path(array('view', 'view.php'));
     }
 
-    public static function signUp()
-    {
+    public static function signUp(){
         $view = 'signUp';
         $pagetitle = 'Inscription';
         $wrongInformations = false;
         require File::build_path(array('view', 'view.php'));
     }
 
-    public static function signUpError($message)
-    {
-        $_GET['action'] = 'signUp';
+    public static function signUpError($message){
+        $_GET['action']='signUp';
         $view = "signUp";
         $pagetitle = 'Inscription';
         $wrongInformations = true;
@@ -40,12 +38,12 @@ class ControllerClients
         //encodage du mdp
         $mdp_hash = Security::hacher($_POST['mdpClient']);
         //fin encodage
-        $validMail = ModelClients::checkEmail($mailClient);
-        if (!$validMail) {
-            self::signUpError(' L\'eMail spécifié est déjà affecté à un compte airsoft :/ ');
-        } else if ($_POST['mdpClient'] != $_POST['confirm_mdpClient']) {
+//        $validMail = ModelClients::checkEmail($mailClient);
+//        if (!$validMail){
+//            self::signUpError(' L\'eMail spécifié est déjà affecté à un compte airsoft :/ ');
+        if ($_POST['mdpClient'] != $_POST['confirm_mdpClient']) {
             self::signUpError(' Les mots de passe ne correspondent pas ! ');
-        } else {
+        }else{
             //Génération du nonce
 //            $nonce = Security::generateRandomHex();
             //Fin de génération du nonce
@@ -58,7 +56,7 @@ class ControllerClients
                 'telClient' => $_POST['telClient'],
                 'mdpClient' => $mdp_hash,
                 'admin' => 0,
-            );
+            ) ;
 
             ModelClients::save($data);
             //Rédaction et envoi du mail
@@ -79,11 +77,19 @@ class ControllerClients
         require_once File::build_path(array('view', 'view.php'));
     }
 
-    public static function validate()
-    {
-        if (ModelClients::checkClient($_POST['codeClient']) && ModelClients::getNonceByCC($_POST['codeClient']) == $_POST['nonce']) {
-            ModelClients::setNonceNullByCC($_POST['codeClient']);
+    public static function validate() {
+        if (ModelClients::getNonceByCC($_GET['codeClient']) == $_GET['nonce']) {
+            ModelClients::setNonceNullByCC($_GET['codeClient']);
+            self::validated();
+        } else {
+            self::errorPageIntrouvable();
         }
+    }
+
+    public static function validated(){
+        $view = "validated";
+        $pagetitle = 'Email vérifié !';
+        require_once File::build_path(array('view', 'view.php'));
     }
 
     public static function signInError()
@@ -100,7 +106,7 @@ class ControllerClients
         $mdp_hash = Security::hacher($_POST['mdpClient']);
         $validUser = ModelClients::checkPassword($emailClient, $mdp_hash);
 //        $codeClient = ModelClients::getCodeClientByEmailAndPassword($emailClient, $mdp_hash);
-        if (!$validUser) { //|| !ModelClients::checkNonce($codeClient)) {
+        if (!$validUser){//|| !ModelClients::checkNonce(ModelClients::getCodeClientByEmailAndPassword($emailClient, $mdp_hash))) {
             self::signInError();
         } else {
             $view = "home";
