@@ -16,11 +16,19 @@ class ControllerClients
         require_once File::build_path(array('view', 'view.php'));
     }
 
-    public static function signIn()
-    {
-        $view = "signIn";
-        $pagetitle = 'Connexion';
+    public static function signUp(){
+        $view = 'signUp';
+        $pagetitle = 'Inscription';
         $wrongInformations = false;
+        require File::build_path(array('view', 'view.php'));
+    }
+
+    public static function signUpError($message){
+        $_GET['action']=create;
+        $view = "signUp";
+        $pagetitle = 'Inscription';
+        $wrongInformations = true;
+        $messageErreur = $message;
         require_once File::build_path(array('view', 'view.php'));
     }
 
@@ -97,9 +105,7 @@ class ControllerClients
                 $_SESSION['admin'] = true;
             }
             $u = ModelClients::select($_SESSION['codeClient']);
-            $view = "home";
-            $pagetitle = 'Profil Utilisateur';
-            require_once File::build_path(array('view', 'view.php')); // TODO ça serait pas mieux de redigirer vers la page principale ?
+            require_once File::build_path(array('view', 'view.php'));
         }
     }
 
@@ -179,11 +185,11 @@ class ControllerClients
             self::errorConnecte();
             exit();
         }
-
+        $action='created';
         $message = $m;
         $methodename = 'created';
         $view = 'update';
-        $pagetitle = 'Inscription';
+        $pagetitle = 'Création';
         require File::build_path(array('view', 'view.php'));
     }
 
@@ -195,6 +201,7 @@ class ControllerClients
         }
 
         if ($_POST['mdpClient'] != $_POST['confirm_mdpClient']) {
+            $action ='create';
             self::create("Les deux mot de passe ne correspondent pas");
             exit();
         }
@@ -235,7 +242,7 @@ class ControllerClients
         } else {
             $u = ModelClients::select($_SESSION['codeClient']);
         }
-
+        $action = 'updated';
         $message = $m;
         $methodename = 'updated';
         $view = "update";

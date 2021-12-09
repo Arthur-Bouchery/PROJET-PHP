@@ -1,5 +1,5 @@
 <form method="POST"
-      action=<?php echo "index.php?controller=" . self::$object . "&action=" . $_GET['action'] . "d" . '>' ?>
+      action=<?php echo "index.php?controller=" . self::$object . "&action=" . $action . '>' ?>
     <legend><?php echo($_GET["action"] == "create" ? "Créer un client" : "Modifier un client"); ?></legend>
     <?php if ($_GET["action"] == "update") { ?>
         <p>

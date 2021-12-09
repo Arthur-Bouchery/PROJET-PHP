@@ -13,9 +13,10 @@ class ModelCommandes extends Model
 
     protected static $object = 'commandes';
 
-    protected static $primary='codeCommande';
+    protected static $primary = 'codeCommande';
 
-    public function __construct($iR = NULL, $cC = NULL, $dC = NULL, $cCl = NULL, $q = NULL) {
+    public function __construct($iR = NULL, $cC = NULL, $dC = NULL, $cCl = NULL, $q = NULL)
+    {
         if (!is_null($iR) && !is_null($dC) && !is_null($cC) && !is_null($cCl) && !is_null($q)) {
             // Si aucun de $m, $c et $i sont nuls,
             // c'est forcement qu'on les a fournis
@@ -27,7 +28,8 @@ class ModelCommandes extends Model
         }
     }
 
-    static public function select($codeCommande){
+    static public function select($codeCommande)
+    {
         try {
             $table_name = static::$object;
             $class_name = 'Model' . ucfirst($table_name);
@@ -41,13 +43,13 @@ class ModelCommandes extends Model
             $tab = $req_prep->fetchAll();
 
             $c = new ModelCommandes();
-            $panier= array();
+            $panier = array();
             $i = 0;
-            foreach ($tab as $item){
+            foreach ($tab as $item) {
                 $temp['idReplique'] = $item['idReplique'];
                 $temp['qte'] = $item['quantite'];
                 $panier[$i] = $temp;
-                $i ++;
+                $i++;
             }
             $c->set('idReplique_qte', $panier);
             $c->set('codeCommande', $codeCommande);
@@ -89,20 +91,44 @@ class ModelCommandes extends Model
         return $tab;
     }
 
-    public static function getLastCode(){
+    static public function selectByCodeClient()
+    {
+        try {
+            $table_name = static::$object;
+            $class_name = 'Model' . ucfirst($table_name);
+
+            $req_prep = Model::getPDO()->prepare("SELECT DISTINCT codeCommande, dateCommande FROM $table_name WHERE codeClient=:codeClient");
+            $values = array(
+                "codeClient" => $_SESSION['codeClient'],
+            );
+            $req_prep->execute($values);
+            return $req_prep->fetchAll();
+        } catch (PDOException $e) {
+            if (Conf::getDebug())
+                echo $e->getMessage();
+            else {
+                echo '<br>Une erreur est survenue - <a href="">Retour à la page d\'accueil</a>';
+            }
+            die();
+        }
+        return $tab;
+    }
+
+    public static function getLastCode()
+    {
         $table_name = static::$object;
-        $class_name = 'Model'.ucfirst($table_name);
-        $sql="SELECT max(codeCommande) FROM commandes";
+        $class_name = 'Model' . ucfirst($table_name);
+        $sql = "SELECT max(codeCommande) FROM commandes";
         $req_prep = Model::getPDO()->prepare($sql);
 
         //on execute la requete
-        try{
+        try {
             $req_prep->execute();
             $tab = $req_prep->fetchAll();
-            if (sizeof($tab)>=1){ //si on a un ou plusieurs résultat
+            if (sizeof($tab) >= 1) { //si on a un ou plusieurs résultat
                 return $tab[0][0];
-            }else return -1; //si aucunz commande
-        }catch (PDOException $e) {
+            } else return -1; //si aucunz commande
+        } catch (PDOException $e) {
             if (Conf::getDebug()) {
                 echo $sql;
                 echo $e->getMessage(); // affiche un message d'erreur
@@ -113,15 +139,18 @@ class ModelCommandes extends Model
         }
     }
 
-    public function get($nom_attribut){
+    public function get($nom_attribut)
+    {
         return $this->$nom_attribut;
     }
 
-    public function set($nom_attribut, $valeur) {
+    public function set($nom_attribut, $valeur)
+    {
         $this->$nom_attribut = $valeur;
     }
 
-    public function enregistrer(){
+    public function enregistrer()
+    {
         foreach ($this->idReplique_qte as $item => $value) {
             $data['codeCommande'] = $this->codeCommande;
             var_dump($item);
@@ -142,6 +171,25 @@ class ModelCommandes extends Model
 //        echo ""
 //    	echo '<br>';
 //    }
-}
 
+    public static function deleteByCC($codeCommande)
+    {
+        $table_name = static::$object;
+        $class_name = 'Model' . ucfirst($table_name);
+
+        $sql = "DELETE FROM commandes WHERE codeCommande=$codeCommande";
+        $req_prep = Model::getPDO()->prepare($sql);
+        try {
+            $req_prep->execute();
+        } catch (PDOException $e) {
+            if (Conf::getDebug()) {
+                echo $sql;
+                echo $e->getMessage(); // affiche un message d'erreur
+            } else {
+                echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
+            }
+            die();
+        }
+    }
+}
 ?>

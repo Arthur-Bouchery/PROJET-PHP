@@ -17,6 +17,6 @@ foreach ($c->get('idReplique_qte') as $item) {
         echo '<br>';
     }
 }
-echo ('<a href="?controller=clients&action=delete&codeClient='.$c->get('codeCommande').'"     >Supprimer</a>');
+echo ('<a href="?controller=commandes&action=delete&codeCommande='.$c->get('codeCommande').'"     >Annuler la commande</a>');
 echo '<br>';
 ?>

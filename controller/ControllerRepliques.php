@@ -112,7 +112,7 @@ class ControllerRepliques
 
         $methodename = 'updated';
         $view = 'update';
-        $pagetitle = 'Modifier une voiture';
+        $pagetitle = 'Modifier une Replique';
         require File::build_path(array("view", "view.php"));
     }
 
