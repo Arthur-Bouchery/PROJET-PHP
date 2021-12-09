@@ -28,10 +28,10 @@
         </div>
         <div id="boxRight">
             <?php
-            if (isset($_SESSION['admin']) && $_SESSION['admin'] == 1)
+            if (isset($_SESSION['codeClient']))
                 echo '<a href="index.php?action=signOut&controller=clients">Se déconnecter</a>';
             else {
-                echo '<a href="index.php?action=signedUp&controller=clients">Inscription</a>';
+                echo '<a href="index.php?action=signUp&controller=clients">Inscription</a>';
                 echo '<a href="index.php?action=signIn&controller=clients">Connexion</a>';
             }
 
@@ -58,7 +58,7 @@
 </main>
 <footer>
     <p>
-        Rsoft 2021 - ne convient pas aux enfants de moins de 7 ans
+        Rsoft 2021 - convient aux enfants de moins de 7 ans
     </p>
 </footer>
 </body>

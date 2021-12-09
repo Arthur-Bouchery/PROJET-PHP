@@ -27,10 +27,11 @@ class ControllerCommandes
 
     }
 
+
     public static function commander() {
         if(!isset($_SESSION['codeClient'])){
             self::errorNotConnected();
-        }else if(empty($_SESSION['panier'])){
+        }else if(sizeof($_SESSION['panier']) <= 0){
             self::panierIsEmpty();
         }else{
             $c = new ModelCommandes();
@@ -47,6 +48,13 @@ class ControllerCommandes
 
     }
 
+    public static function historique() {
+        $view = 'list';
+        $pagetitle = 'Liste des Commandes';
+        $tab_commande = ModelCommandes::selectByCodeClient();     //appel au modèle pour gerer la BD
+        require_once File::build_path(array('view', 'view.php'));  //"redirige" vers la vue
+    }
+
     public static function errorCommandeInexistante() {
         $view = 'errorCommande';
         $pagetitle = 'Commande inexistante';
@@ -60,9 +68,15 @@ class ControllerCommandes
     }
 
     public static function panierIsEmpty() {
-        $view = 'panier';
+        $view = 'panierVide';
         $pagetitle = 'Le panier est vide';
         require File::build_path(array("view", "view.php"));
+    }
+
+    public static function delete() {
+        ModelCommandes::deleteByCC($_GET['codeCommande']);
+        self::historique();
+
     }
 
 }

@@ -6,7 +6,7 @@
         <p>
             <label for="id_id">Identifiant</label> :
             <input type="text" value="<?php echo htmlspecialchars($r->get('idReplique')); ?>" name="idReplique"
-                   id="id_id "' . <?php ($_GET["action"] != "create" ? "readonly" : "required") ?> . '/>
+                   id="id_id " readonly/>
         </p>
     <?php }
     ?>

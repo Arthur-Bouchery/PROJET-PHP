@@ -24,6 +24,51 @@ class ControllerClients
         require_once File::build_path(array('view', 'view.php'));
     }
 
+    public static function signedUp(){
+        $emailClient = $_POST['mailClient'];
+        $mdp_hash = Security::hacher($_POST['mdpClient']);
+        $validUser = ModelClients::checkEmail($emailClient);
+        if (!$validUser){
+            self::signUpError(' L\'eMail spécifié est déjà affecté à un compte airsoft :/ ');
+        }else if ($_POST['mdpClient'] != $_POST['confirm_mdpClient']) {
+            self::signUpError(' Les mots de passe ne correspondent pas ! ');
+        }else{
+            //Génération du nonce
+//            $nonce = Security::generateRandomHex();
+            //Fin de génération du nonce
+            unset($_GET['confirm_mdpClient']);
+            //encodage du mdp
+            $_GET['mdpClient'] = Security::hacher($_POST['mdpClient']);
+            //fin encodage
+            unset($_GET['confirm_mdpClient']);
+            unset($_GET['action']);
+            unset($_GET['controller']);
+            $_GET['admin']=0;
+            ModelClients::save($_GET);
+            //Rédaction et envoi du mail
+//            $mail = "<a href='webinfo.iutmontp.univ-montp2.fr/~bessej/projet-php/?controller=clients&action=validate&nonce=".ModelClients::getNonceByCC(ModelClients::getCodeClientByEmailAndPassword($_POST['mailClient'],$_POST['mdpClient']))."&codeClient=".ModelClients::getCodeClientByEmailAndPassword($_POST['mailClient'],$_POST['mdpClient'])."'>Cliquez ici pour valider votre eMail</a>";
+//            mail($_POST['mailClient'],"confirmation mail airsoft",$mail);
+            //Fin d'envoi
+            $tab_u = ModelClients::selectAll();     //appel au modèle pour gerer la BD
+            //$u = ModelClients::select($_GET['codeClient']); je m'en carre le fion de cette ligne
+            Self::signIn();
+        }
+    }
+
+    public static function signIn()
+    {
+        $view = "signIn";
+        $pagetitle = 'Connexion';
+        $wrongInformations = false;
+        require_once File::build_path(array('view', 'view.php'));
+    }
+
+    public static function validate() {
+        if (ModelClients::checkClient($_POST['codeClient']) && ModelClients::getNonceByCC($_POST['codeClient']) == $_POST['nonce']) {
+            ModelClients::setNonceNullByCC($_POST['codeClient']);
+        }
+    }
+
     public static function signInError()
     {
         $view = "signIn";
@@ -34,23 +79,23 @@ class ControllerClients
 
     public static function signedIn()
     {
-        $mailClient = $_POST['mailClient'];
+        $emailClient = $_POST['mailClient'];
         $mdp_hash = Security::hacher($_POST['mdpClient']);
-        $validUser = ModelClients::checkPassword($mailClient, $mdp_hash);
-
-        if (!$validUser) {
+        $validUser = ModelClients::checkPassword($emailClient, $mdp_hash);
+//        $codeClient = ModelClients::getCodeClientByEmailAndPassword($emailClient, $mdp_hash);
+        if (!$validUser){ //|| !ModelClients::checkNonce($codeClient)) {
             self::signInError();
         } else {
+            $view = "home";
+            $pagetitle = 'Profil Utilisateur';
             //ouvrir la session du client
-            $_SESSION['codeClient'] = ModelClients::getCodeClientByEmailAndPassword($mailClient, $mdp_hash);
-            $_SESSION['mailClient'] = ModelClients::getMailClient($mailClient);
+            $_SESSION['codeClient'] = ModelClients::getCodeClientByEmailAndPassword($emailClient, $mdp_hash);
             $ad = ModelClients::select($_SESSION['codeClient']);
             $_SESSION['prenomClient'] = $ad->get('prenomClient');
             $admin = $ad->get('admin');
             if ($admin) {
                 $_SESSION['admin'] = true;
             }
-
             $u = ModelClients::select($_SESSION['codeClient']);
             $view = "home";
             $pagetitle = 'Profil Utilisateur';
@@ -62,6 +107,7 @@ class ControllerClients
     {
         if (isset($_SESSION['codeClient'])) {
             unset($_SESSION['codeClient']);
+            unset($_SESSION['prenomClient']);
             unset($_SESSION['admin']);
             session_destroy();
         }
@@ -233,16 +279,14 @@ class ControllerClients
         require_once File::build_path(array('view', 'view.php'));
     }
 
-    public
-    static function errorPageIntrouvable()
+    public static function errorPageIntrouvable()
     {
         $view = 'errorPageIntrouvable';
         $pagetitle = 'Page introuvable';
         require_once File::build_path(array('view', 'view.php'));
     }
 
-    public
-    static function errorClientInexistant()
+    public static function errorClientInexistant()
     {
         $view = 'errorClient';
         $pagetitle = 'Client inexistant';
