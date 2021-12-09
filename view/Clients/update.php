@@ -6,7 +6,9 @@
             <label for="login_id">Identifiant</label> :
             <input type="text" <?php if (isset($u)) {
                 echo 'value="' . htmlspecialchars($u->get('codeClient'));
-            } else {
+            } else if (isset($_POST['codeClient'])) {
+                echo 'value="' . htmlspecialchars($_POST['codeClient']);
+            }else {
                 echo 'placeholder="numero client"';
             } ?>" name="codeClient"
             id="login_id" <?php echo $_GET["action"] != "create" ? "readonly" : "required"; ?> />
@@ -16,7 +18,9 @@
         <label for="prenom_id">Prénom</label> :
         <input type="text" <?php if (isset($u)) {
             echo 'value="' . htmlspecialchars($u->get('prenomClient'));
-        } else {
+        } else if (isset($_POST['prenomClient'])) {
+            echo 'value="' . htmlspecialchars($_POST['prenomClient']);
+        }else {
             echo 'placeholder="prenom client"';
         } ?>" name="prenomClient" id="prenom_id" required/>
     </p>
@@ -24,7 +28,9 @@
         <label for="nom_id">Nom</label> :
         <input type="text" <?php if (isset($u)) {
             echo 'value="' . htmlspecialchars($u->get('nomClient'));
-        } else {
+        } else if (isset($_POST['nomClient'])) {
+            echo 'value="' . htmlspecialchars($_POST['nomClient']);
+        }else {
             echo 'placeholder="nom client"';
         } ?>" name="nomClient" id="nom_id" required/>
     </p>
@@ -32,7 +38,9 @@
         <label for="nom_id">Adresse mail</label> :
         <input type="text" <?php if (isset($u)) {
             echo 'value="' . htmlspecialchars($u->get('mailClient'));
-        } else {
+        } else if (isset($_POST['mailClient'])) {
+            echo 'value="' . htmlspecialchars($_POST['mailClient']);
+        }else {
             echo 'placeholder="email@client"';
         } ?>" name="mailClient" id="mail_id" required/>
     </p>
@@ -40,7 +48,9 @@
         <label for="nom_id">Numéro de téléphone</label> :
         <input type="text" <?php if (isset($u)) {
             echo 'value="' . htmlspecialchars($u->get('telClient'));
-        } else {
+        } else if (isset($_POST['telClient'])) {
+            echo 'value="' . htmlspecialchars($_POST['telClient']);
+        }else {
             echo 'placeholder="téléphone client"';
         } ?>" name="telClient" id="nom_id" required/>
     </p>
