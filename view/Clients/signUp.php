@@ -11,7 +11,9 @@
             <label for="prenom_id">Prenom</label> :
             <input type="text" <?php if (isset($u)) {
                 echo 'value="' . htmlspecialchars($u->get('prenomClient'));
-            } else {
+            } else if (isset($_POST['prenomClient'])) {
+                echo 'value="' . htmlspecialchars($_POST['prenomClient']);
+            }else {
                 echo 'placeholder="prenom client"';
             } ?>" name="prenomClient" id="prenom_id" required/>
         </p>
@@ -19,7 +21,9 @@
             <label for="nom_id">Nom</label> :
             <input type="text" <?php if (isset($u)) {
                 echo 'value="' . htmlspecialchars($u->get('nomClient'));
-            } else {
+            } else if (isset($_POST['nomClient'])) {
+                echo 'value="' . htmlspecialchars($_POST['nomClient']);
+            }else {
                 echo 'placeholder="nom client"';
             } ?>" name="nomClient" id="nom_id" required/>
         </p>
@@ -27,7 +31,9 @@
             <label for="nom_id">eMail</label> :
             <input type="email" <?php if (isset($u)) {
                 echo 'value="' . htmlspecialchars($u->get('mailClient'));
-            } else {
+            } else if (isset($_POST['mailClient'])) {
+                echo 'value="' . htmlspecialchars($_POST['mailClient']);
+            }else{
                 echo 'placeholder="email@client"';
             } ?>" name="mailClient" id="mail_id" required/>
         </p>
@@ -35,7 +41,9 @@
             <label for="nom_id">telephone</label> :
             <input type="text" <?php if (isset($u)) {
                 echo 'value="' . htmlspecialchars($u->get('telClient'));
-            } else {
+            } else if (isset($_POST['telClient'])) {
+                echo 'value="' . htmlspecialchars($_POST['telClient']);
+            }else {
                 echo 'placeholder="téléphone client"';
             } ?>" name="telClient" id="nom_id" required/>
         </p>

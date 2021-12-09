@@ -16,5 +16,8 @@ foreach ($tab_panier as $k => $v) {
 }
 ?>
     <p>
-
+        <a href="?controller=repliques&action=readAll">Continuer mes achats</a>
+    </p>
+    <p>
         <a href="?controller=commandes&action=commander">Passer la commande</a>
+    </p>
