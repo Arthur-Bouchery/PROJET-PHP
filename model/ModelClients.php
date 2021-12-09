@@ -26,11 +26,117 @@ class ModelClients extends Model{
         }
     }
 
+    public static function checkClient($codeClient) {
+        $table_name = static::$object;
+        $class_name = 'Model'.ucfirst($table_name);
+
+        $sql="SELECT DISTINCT codeClient FROM clients WHERE codeClient=$codeClient";
+        $req_prep = Model::getPDO()->prepare($sql);
+        try{
+            $req_prep->execute();
+            $tab = $req_prep->fetchAll();
+            if ($tab[0] !== null){  //Si le client existe alors true
+                return true;
+            }else return false;
+        }catch (PDOException $e) {
+            if (Conf::getDebug()) {
+                echo $sql;
+                echo $e->getMessage(); // affiche un message d'erreur
+            } else {
+                echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
+            }
+            die();
+        }
+    }
+
+    public static function setNonceNullByCC($codeClient) {
+        $table_name = static::$object;
+        $class_name = 'Model'.ucfirst($table_name);
+
+        $sql="UPDATE clients SET nonce=NULL WHERE codeClient=$codeClient";
+        $req_prep = Model::getPDO()->prepare($sql);
+        try{
+            $req_prep->execute();
+        }catch (PDOException $e) {
+            if (Conf::getDebug()) {
+                echo $sql;
+                echo $e->getMessage(); // affiche un message d'erreur
+            } else {
+                echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
+            }
+            die();
+        }
+    }
+
+    public static function setNonceByCC($codeClient, $nonce) {
+        $table_name = static::$object;
+        $class_name = 'Model'.ucfirst($table_name);
+
+        $sql="UPDATE clients SET nonce=$nonce WHERE codeClient=$codeClient";
+        $req_prep = Model::getPDO()->prepare($sql);
+        try{
+            $req_prep->execute();
+        }catch (PDOException $e) {
+            if (Conf::getDebug()) {
+                echo $sql;
+                echo $e->getMessage(); // affiche un message d'erreur
+            } else {
+                echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
+            }
+            die();
+        }
+    }
+
+    public static function getNonceByCC($codeClient) {
+        $table_name = static::$object;
+        $class_name = 'Model'.ucfirst($table_name);
+
+        $sql="SELECT DISTINCT nonce FROM clients WHERE codeClient=$codeClient";
+        $req_prep = Model::getPDO()->prepare($sql);
+        try{
+            $req_prep->execute();
+            $tab = $req_prep->fetchAll();
+            //Si le client existe alors true
+            return $tab[0];
+        }catch (PDOException $e) {
+            if (Conf::getDebug()) {
+                echo $sql;
+                echo $e->getMessage(); // affiche un message d'erreur
+            } else {
+                echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
+            }
+            die();
+        }
+    }
+
+    public static function checkNonce($codeClient) {
+        $table_name = static::$object;
+        $class_name = 'Model'.ucfirst($table_name);
+
+        $sql="SELECT DISTINCT nonce FROM clients WHERE codeClient=$codeClient";
+        $req_prep = Model::getPDO()->prepare($sql);
+        try{
+            $req_prep->execute();
+            $tab = $req_prep->fetchAll();
+            if ($tab[0] == null){  //Si le nonce est null alors on peut se co
+                return true;
+            }else return false;
+        }catch (PDOException $e) {
+            if (Conf::getDebug()) {
+                echo $sql;
+                echo $e->getMessage(); // affiche un message d'erreur
+            } else {
+                echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
+            }
+            die();
+        }
+    }
+    //return false si aucun compte ne possède cet email
     public static function checkEmail($emailClient){
         $table_name = static::$object;
         $class_name = 'Model'.ucfirst($table_name);
 
-        $sql="SELECT DISTINCT codeClient FROM p_Clients WHERE mailClient=$emailClient";
+        $sql="SELECT DISTINCT codeClient FROM Clients WHERE mailClient=$emailClient";
         $req_prep = Model::getPDO()->prepare($sql);
 
         //on execute la requete

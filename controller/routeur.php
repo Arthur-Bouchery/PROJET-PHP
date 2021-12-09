@@ -6,6 +6,7 @@ $_SESSION['panier'] = array();
 require_once File::build_path(array("controller", "ControllerRepliques.php"));
 require_once File::build_path(array("controller", "ControllerClients.php"));
 require_once File::build_path(array("controller", "ControllerPanier.php"));
+require_once File::build_path(array("controller", "ControllerCommandes.php"));
 
 // Implémentation des préférences du cookie
 if (!isset($_COOKIE['pagePref'])) {
@@ -23,9 +24,11 @@ if (isset($_GET['controller'])) {
 // Vérification que le controller existe
 $controller_class = 'Controller' . ucfirst($controller);
 if (!class_exists($controller_class)) {
-    ControllerRepliques::error();
+    ControllerRepliques::errorPageIntrouvable();
     exit();
 }
+
+
 
 // Récupération de la variable action
 if (!isset($_GET['action'])) { // Actions par défaut si rien n'a été spécifié
@@ -38,7 +41,7 @@ else
 // Vérification que l'action existe dans la classe
 $methodes = get_class_methods($controller_class);
 if (!in_array($action, $methodes)) {
-    $controller_class::error();
+    $controller_class::errorPageIntrouvable();
     exit();
 }
 

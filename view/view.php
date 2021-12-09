@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title><?php echo $pagetitle; ?></title>
     <link rel="stylesheet" type="text/css" href="view/style.css">
+    <link rel="icon" href="view/images/favicon.png">
 </head>
 <body>
 <header>
@@ -16,30 +17,33 @@
             </div>
             <div id="boxCenter">
                 <a href="index.php?action=readAll&controller=repliques">Répliques</a>
-                <a href="index.php?&controller=clients&action=home"> <?php if (isset($_SESSION['prenomClient'])) {
+                <a href="index.php?action=readAll&controller=panier">Panier</a>
+                <a href="index.php?&controller=clients&action=home">
+                    <?php if (isset($_SESSION['prenomClient'])) {
                         echo $_SESSION['prenomClient'];
                     } else {
                         echo "Profil";
                     } ?></a>
-                <a href="view/preferences.html">Préférences</a>
-                <a href="index.php?action=readAll&controller=panier">Panier</a>
             </div>
         </div>
         <div id="boxRight">
             <?php
-            if (isset($_SESSION['admin']) && $_SESSION['admin'] == 1)
+            if (isset($_SESSION['codeClient']))
                 echo '<a href="index.php?action=signOut&controller=clients">Se déconnecter</a>';
-            else
+            else {
+                echo '<a href="index.php?action=signUp&controller=clients">Inscription</a>';
                 echo '<a href="index.php?action=signIn&controller=clients">Connexion</a>';
+            }
 
             ?>
         </div>
     </div>
     <?php if (isset($_SESSION['admin']) && $_SESSION['admin'] == 1) {
-    echo '<div id="headerBottom">
+        echo '<div id="headerBottom">
         <a href="index.php?action=readAll&controller=clients">Gestion des clients</a>
         <a href="index.php?action=create&controller=clients">Créer un client</a>
         <a href="index.php?action=create&controller=repliques">Créer une réplique</a>
+        <a href="index.php?action=readAll&controller=commandes">Gestion des commandes</a>
     </div>';
     } ?>
 
@@ -54,7 +58,7 @@
 </main>
 <footer>
     <p>
-        Rsoft 2021 - ne convient pas aux enfants de moins de 7 ans
+        Rsoft 2021 - convient aux enfants de moins de 7 ans
     </p>
 </footer>
 </body>

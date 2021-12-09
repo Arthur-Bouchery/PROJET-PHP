@@ -2,8 +2,7 @@
 class Conf {
     // la variable debug est un boolean
     static private $debug = True; 
-    
-    
+
     static private $databases = array(
     // Le nom d'hote est webinfo a l'IUT
     // ou localhost sur votre machine
@@ -42,4 +41,3 @@ class Conf {
     }
 
 }
-?>
