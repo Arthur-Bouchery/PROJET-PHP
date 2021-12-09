@@ -1,3 +1,1 @@
-<?php
-echo "VOUS N'ÊTES PAS CONNECTE";
-?>
+<h1>Vous devez être connecté ou être administrateur pour accéder à cette page</h1>

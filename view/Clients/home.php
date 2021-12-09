@@ -1,15 +1,11 @@
-<?php
-    if (isset($_SESSION['codeClient'])) {
-        ?>
-        <p>Vous êtes beau</p>
-        <p><a href=?controller=Clients&action=signOut>J'veux plus me co</a> </p>
-        <a href="?controller=Commandes&action=historique">Les commandes de SIRE Petr</a>
-        <?php
-    } else {
-        ?>
-        <p><a href=?controller=Clients&action=signIn>Se connecter</a> </p>
+<h3>Mon profil</h3>
+<a href="?controller=commandes&action=historique">Historique des commandes</a>
+<a href="?controller=clients&action=read">Mes informations</a>
+<a href="?controller=clients&action=update">Modifier mes informations</a>
+<a href="?controller=clients&action=delete">Supprimer mon compte</a>
 
-        <p><a href=?controller=Clients&action=signUp>s'inscrire</a> </p>
-        <?php
-    }
-?>
+
+
+
+
+

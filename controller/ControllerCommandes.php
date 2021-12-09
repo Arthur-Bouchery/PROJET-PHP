@@ -8,6 +8,11 @@ class ControllerCommandes
 
     public static function read()
     {
+        if (!isset($_SESSION['codeClient'])) {
+            self::errorNotConnected();
+            exit();
+        }
+
         $c = ModelCommandes::select($_GET['codeCommande']);
         if ($c == false) {
             self::errorCommandeInexistante();
@@ -20,6 +25,11 @@ class ControllerCommandes
     }
 
     public static function readAll(){
+        if (!isset($_SESSION['codeClient'])) {
+            self::errorNotConnected();
+            exit();
+        }
+
         $view = 'list';
         $pagetitle = 'Liste des Commandes';
         $tab_commande = ModelCommandes::selectAll();     //appel au modèle pour gerer la BD
@@ -49,6 +59,11 @@ class ControllerCommandes
     }
 
     public static function historique() {
+        if (!isset($_SESSION['codeClient'])) {
+            self::errorNotConnected();
+            exit();
+        }
+
         $view = 'list';
         $pagetitle = 'Liste des Commandes';
         if (isset($_SESSION['codeClient'])) {

@@ -65,9 +65,11 @@
                id="nom_id" <?php echo $_GET["action"] == "create" ? "required" : ""; ?>/>
     </p>
     <p>
+        <?php if($_SESSION['admin']){?>
         <label for="admin_id">Donner un rôle administrateur</label>
         <input type="checkbox" name="admin"
                value="1" <?php if (isset($u) && $u->get('admin') !== 0) echo "checked"; ?>>
+        <?php } ?>
     </p>
     <input type="submit" value="Envoyer"/>
     <?php

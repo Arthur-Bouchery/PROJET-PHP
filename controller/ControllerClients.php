@@ -16,15 +16,17 @@ class ControllerClients
         require_once File::build_path(array('view', 'view.php'));
     }
 
-    public static function signUp(){
+    public static function signUp()
+    {
         $view = 'signUp';
         $pagetitle = 'Inscription';
         $wrongInformations = false;
         require File::build_path(array('view', 'view.php'));
     }
 
-    public static function signUpError($message){
-        $_GET['action']='signUp';
+    public static function signUpError($message)
+    {
+        $_GET['action'] = 'signUp';
         $view = "signUp";
         $pagetitle = 'Inscription';
         $wrongInformations = true;
@@ -32,17 +34,18 @@ class ControllerClients
         require_once File::build_path(array('view', 'view.php'));
     }
 
-    public static function signedUp(){
+    public static function signedUp()
+    {
         $mailClient = $_POST['mailClient'];
         //encodage du mdp
         $mdp_hash = Security::hacher($_POST['mdpClient']);
         //fin encodage
         $validMail = ModelClients::checkEmail($mailClient);
-        if (!$validMail){
+        if (!$validMail) {
             self::signUpError(' L\'eMail spécifié est déjà affecté à un compte airsoft :/ ');
-        }else if ($_POST['mdpClient'] != $_POST['confirm_mdpClient']) {
+        } else if ($_POST['mdpClient'] != $_POST['confirm_mdpClient']) {
             self::signUpError(' Les mots de passe ne correspondent pas ! ');
-        }else{
+        } else {
             //Génération du nonce
 //            $nonce = Security::generateRandomHex();
             //Fin de génération du nonce
@@ -55,7 +58,7 @@ class ControllerClients
                 'telClient' => $_POST['telClient'],
                 'mdpClient' => $mdp_hash,
                 'admin' => 0,
-            ) ;
+            );
 
             ModelClients::save($data);
             //Rédaction et envoi du mail
@@ -76,7 +79,8 @@ class ControllerClients
         require_once File::build_path(array('view', 'view.php'));
     }
 
-    public static function validate() {
+    public static function validate()
+    {
         if (ModelClients::checkClient($_POST['codeClient']) && ModelClients::getNonceByCC($_POST['codeClient']) == $_POST['nonce']) {
             ModelClients::setNonceNullByCC($_POST['codeClient']);
         }
@@ -96,7 +100,7 @@ class ControllerClients
         $mdp_hash = Security::hacher($_POST['mdpClient']);
         $validUser = ModelClients::checkPassword($emailClient, $mdp_hash);
 //        $codeClient = ModelClients::getCodeClientByEmailAndPassword($emailClient, $mdp_hash);
-        if (!$validUser){ //|| !ModelClients::checkNonce($codeClient)) {
+        if (!$validUser) { //|| !ModelClients::checkNonce($codeClient)) {
             self::signInError();
         } else {
             $view = "home";
@@ -108,7 +112,8 @@ class ControllerClients
             $admin = $ad->get('admin');
             if ($admin) {
                 $_SESSION['admin'] = true;
-            }
+            } else
+                $_SESSION['admin'] = false;
             $u = ModelClients::select($_SESSION['codeClient']);
             require_once File::build_path(array('view', 'view.php'));
         }
@@ -162,26 +167,35 @@ class ControllerClients
 
     public static function delete()
     {
-        if (!isset($_SESSION['codeClient']) || !$_SESSION['admin']) {
+        if (!isset($_SESSION['codeClient'])) {
             self::errorConnecte();
             exit();
         }
 
-        if (!isset($_GET['codeClient'])) {
-            self::errorPageIntrouvable();
-            exit();
+
+        if ($_SESSION['admin'] && isset($_GET['codeClient'])) {
+            if (ModelClients::select($_GET['codeClient']) == false) {
+                self::errorClientInexistant();
+                exit();
+            }
+            ModelClients::delete($_GET['codeClient']);
+        } else {
+            ModelClients::delete($_SESSION['codeClient']);
+            unset($_SESSION['codeClient']);
+            unset($_SESSION['admin']);
+            unset($_SESSION['panier']);
+            unset($_SESSION['prenomClient']);
         }
 
-        if (ModelClients::select($_GET['codeClient']) == false) {
-            self::errorClientInexistant();
-            exit();
-        }
+        if (isset($_SESSION['admin']) && $_SESSION['admin']) {
+            $tab_u = ModelClients::selectAll();
+            $view = "deleted";
+        } else
+            $view = 'home';
 
-        ModelClients::delete($_GET['codeClient']);
-        $tab_u = ModelClients::selectAll();
-        $view = "deleted";
         $pagetitle = 'Suppression d\'un client';
         require_once File::build_path(array('view', 'view.php'));
+
     }
 
     public static function create($m = "")
@@ -190,7 +204,7 @@ class ControllerClients
             self::errorConnecte();
             exit();
         }
-        $action='created';
+        $action = 'created';
         $message = $m;
         $methodename = 'created';
         $view = 'update';
@@ -206,7 +220,7 @@ class ControllerClients
         }
 
         if ($_POST['mdpClient'] != $_POST['confirm_mdpClient']) {
-            $action ='create';
+            $action = 'create';
             self::create("Les deux mot de passe ne correspondent pas");
             exit();
         }
@@ -216,7 +230,7 @@ class ControllerClients
             'nomClient' => $_POST['nomClient'],
             'prenomClient' => $_POST['prenomClient'],
             'mailClient' => $_POST['mailClient'],
-            'telClient' => $_POST['telClient']
+            'telClient' => $_POST['telClient'],
         );
 
         if (ModelClients::save($data) == false) {
@@ -238,7 +252,7 @@ class ControllerClients
             exit();
         }
 
-        if(isset($_POST['codeClient'])) {
+        if (isset($_POST['codeClient'])) {
             $_GET['codeClient'] = $_POST['codeClient'];
         }
 
@@ -267,10 +281,11 @@ class ControllerClients
         }
 
         if ($_POST['mdpClient'] != $_POST['confirm_mdpClient']) {
-            $_GET['action']='update';
+            $_GET['action'] = 'update';
             self::update("Les deux mot de passe ne correspondent pas");
             exit();
         }
+
 
         $data = array(
             'nomClient' => $_POST['nomClient'],
@@ -282,6 +297,12 @@ class ControllerClients
         if (!$_POST['mdpClient'] == "")
             $data['mdpClient'] = Security::hacher($_POST['mdpClient']);
 
+        if (isset($_POST['admin']) && $_SESSION['admin']) {
+            $data['admin'] = $_POST['admin'];
+        } else
+            $data['admin'] = 0;
+
+
         if ($_SESSION['admin'] && isset($_POST['codeClient'])) {
             $data['codeClient'] = $_POST['codeClient'];
         } else {
@@ -290,7 +311,10 @@ class ControllerClients
 
         ModelClients::update($data);
 
-        $view = 'updated';
+        if ($_SESSION['admin'])
+            $view = 'updated';
+        else
+            $view = 'home';
         $pagetitle = 'Liste des clients';
         $tab_u = ModelClients::selectAll();
         require_once File::build_path(array('view', 'view.php'));
