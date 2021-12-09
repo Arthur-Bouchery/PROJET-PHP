@@ -10,7 +10,7 @@
         <br>
         <?php
         if ($wrongInformations == true)
-            echo '<p style="color:red">L\'adresse mail ou le mot de passe entré sont incorrects</p>';
+            echo '<p style="color:red">L\'adresse mail ou le mot de passe entré sont incorrects  PS: avez-vous vérifié votre Email ?</p>';
         ?>
         <input type="submit" value="Envoyer"/>
     </p>

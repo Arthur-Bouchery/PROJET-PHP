@@ -37,14 +37,14 @@ class ControllerClients
         //encodage du mdp
         $mdp_hash = Security::hacher($_POST['mdpClient']);
         //fin encodage
-        $validMail = ModelClients::checkEmail($mailClient);
-        if (!$validMail){
-            self::signUpError(' L\'eMail spécifié est déjà affecté à un compte airsoft :/ ');
-        }else if ($_POST['mdpClient'] != $_POST['confirm_mdpClient']) {
+//        $validMail = ModelClients::checkEmail($mailClient);
+//        if (!$validMail){
+//            self::signUpError(' L\'eMail spécifié est déjà affecté à un compte airsoft :/ ');
+        if ($_POST['mdpClient'] != $_POST['confirm_mdpClient']) {
             self::signUpError(' Les mots de passe ne correspondent pas ! ');
         }else{
             //Génération du nonce
-//            $nonce = Security::generateRandomHex();
+            $nonce = Security::generateRandomHex();
             //Fin de génération du nonce
 
             //préparation $data
@@ -55,13 +55,17 @@ class ControllerClients
                 'telClient' => $_POST['telClient'],
                 'mdpClient' => $mdp_hash,
                 'admin' => 0,
+//                //le nonce
+//                'nonce' => $nonce,
             ) ;
 
             ModelClients::save($data);
-            //Rédaction et envoi du mail
-//            $mail = "<a href='webinfo.iutmontp.univ-montp2.fr/~bessej/projet-php/?controller=clients&action=validate&nonce=".ModelClients::getNonceByCC(ModelClients::getCodeClientByEmailAndPassword($_POST['mailClient'],$_POST['mdpClient']))."&codeClient=".ModelClients::getCodeClientByEmailAndPassword($_POST['mailClient'],$_POST['mdpClient'])."'>Cliquez ici pour valider votre eMail</a>";
-//            mail($_POST['mailClient'],"confirmation mail airsoft",$mail);
-            //Fin d'envoi
+//            //Rédaction et envoi du mail
+//            $mail = "<a href='https://webinfo.iutmontp.univ-montp2.fr/~marceronl/PROJET-PHP/?controller=clients&action=validate&nonce=".$nonce."&codeClient=".ModelClients::getCodeClientByEmailAndPassword($_POST['mailClient'],$mdp_hash)."'>Cliquez ici pour valider votre eMail</a>";
+//            $headers = "MIME-Version: 1.0" . "\r\n";
+//            $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+//            mail($_POST['mailClient'],"confirmation mail airsoft",$mail, $headers);
+//            //Fin d'envoi
             //$tab_u = ModelClients::selectAll();     //appel au modèle pour gerer la BD
             //$u = ModelClients::select($_GET['codeClient']); je m'en carre le fion de cette ligne
             Self::signIn();
@@ -77,9 +81,18 @@ class ControllerClients
     }
 
     public static function validate() {
-        if (ModelClients::checkClient($_POST['codeClient']) && ModelClients::getNonceByCC($_POST['codeClient']) == $_POST['nonce']) {
-            ModelClients::setNonceNullByCC($_POST['codeClient']);
+        if (ModelClients::getNonceByCC($_GET['codeClient']) == $_GET['nonce']) {
+            ModelClients::setNonceNullByCC($_GET['codeClient']);
+            self::validated();
+        } else {
+            self::errorPageIntrouvable();
         }
+    }
+
+    public static function validated(){
+        $view = "validated";
+        $pagetitle = 'Email vérifié !';
+        require_once File::build_path(array('view', 'view.php'));
     }
 
     public static function signInError()
@@ -96,7 +109,7 @@ class ControllerClients
         $mdp_hash = Security::hacher($_POST['mdpClient']);
         $validUser = ModelClients::checkPassword($emailClient, $mdp_hash);
 //        $codeClient = ModelClients::getCodeClientByEmailAndPassword($emailClient, $mdp_hash);
-        if (!$validUser){ //|| !ModelClients::checkNonce($codeClient)) {
+        if (!$validUser){//|| !ModelClients::checkNonce(ModelClients::getCodeClientByEmailAndPassword($emailClient, $mdp_hash))) {
             self::signInError();
         } else {
             $view = "home";
