@@ -57,6 +57,7 @@
 <footer>
     <p>
         Rsoft 2021 - convient aux enfants de moins de 7 ans
+        (Besse.J Bouchery.A Marceron.L)
     </p>
 </footer>
 </body>
